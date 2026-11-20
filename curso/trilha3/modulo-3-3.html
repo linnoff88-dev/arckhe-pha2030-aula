@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="pha2030">
+  <title>Modulo 3.3 | PHA 2030</title>
+
+  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+  <script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style, scale = (+p.fontScale||100);
+      s.setProperty('--inema-font-scale', (scale/100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth||68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              900: '#111827',
+              800: '#1f2937',
+              700: '#374151',
+              600: '#4b5563',
+              500: '#6b7280'
+            },
+            primary: '#FACC15'
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="../../assets/learn.css">
+
+  <!-- Manifesto do curso (IDENTICO em todas as paginas) -->
+  <script type="application/json" data-inema-manifest>
+  {
+    "course": "pha2030",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos do PHA 2030", "modules": [
+        { "id": "1-1", "title": "O momento do mercado de IA", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "Educação como porta de entrada", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Potencial Humano Aumentado", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Por que habilitar vale mais que executar", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Diagnóstico e Condução da Sala", "modules": [
+        { "id": "2-1", "title": "Os quatro perfis da sala", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Discovery antes da entrega", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Como criar o aha moment", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Estrutura de aula e workshop", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Jornada de Transformação e Oferta", "modules": [
+        { "id": "3-1", "title": "Awareness até Scale", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "O treinamento como entrada relacional", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Do workshop à consultoria aplicada", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Aplicação prática e próximo passo", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" }
+      ]}
+    ]
+  }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .topic-explanation.hidden { display: none; }
+    .topic-explanation { display: block; }
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 5rem; }
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+  
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Light mode — acentos blue/primary/red das caixas do modulo */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-500\/10 { background-color: rgba(220,38,38,0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220,38,38,0.25); }
+
+    /* Dark — bordas e divisorias suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Diagramas SVG futuristas — pulso + adaptacao ao tema claro */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+  
+    <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-14">
+          <div class="flex items-center space-x-4">
+            <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+              <span class="text-2xl">🧠</span>
+              <span class="font-bold text-lg hidden sm:inline">PHA 2030</span>
+            </a>
+            <span class="text-neutral-600">|</span>
+            <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+          </div>
+          <div class="flex items-center space-x-1 sm:space-x-2">
+            <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a><a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Diagnóstico</span></a><a href="index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Transformação</span></a>
+            <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors text-sm ml-1" title="Minha jornada"><span aria-hidden="true">◷</span><span class="hidden lg:inline">Jornada</span><span class="inema-journey-badge hidden" data-inema-journey-badge data-count="0"></span></button>
+            <div class="relative">
+              <button type="button" data-inema-appearance-toggle="[data-inema-appearance]" aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" title="Aparencia e leitura"><span aria-hidden="true">◑</span></button>
+              <div data-inema-appearance class="inema-appearance-pop">
+                <div class="inema-segment"><button data-inema-set-theme="inema-dark">Escuro</button><button data-inema-set-theme="claro">Claro</button><button data-inema-set-theme="sepia">Sépia</button><button data-inema-set-theme="foco">Foco</button><button data-inema-set-theme="contraste">Alto contraste</button></div>
+                <div class="inema-segment"><button data-inema-set-font="inter">Inter</button><button data-inema-set-font="system">Sistema</button><button data-inema-set-font="leitura">Leitura</button></div>
+                <div class="inema-segment"><button data-inema-set-fontscale="100">A</button><button data-inema-set-fontscale="112">A+</button><button data-inema-set-fontscale="125">A++</button></div>
+                <div class="inema-segment"><button data-inema-set-linewidth="60">Estreito</button><button data-inema-set-linewidth="68">Médio</button><button data-inema-set-linewidth="75">Largo</button></div>
+                <div class="inema-segment"><button data-inema-set-leading="1.45">Compacto</button><button data-inema-set-leading="1.7">Confortável</button></div>
+                <div class="inema-accent-grid"><button data-inema-set-accent="emerald"></button><button data-inema-set-accent="blue"></button><button data-inema-set-accent="purple"></button><button data-inema-set-accent="amber"></button><button data-inema-set-accent="teal"></button><button data-inema-set-accent="rose"></button></div>
+              </div>
+            </div>
+            <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+              <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+              </svg>
+              <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  
+  
+      <div class="border-b border-dark-600 bg-dark-900/70">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-neutral-400">
+          <a href="../../index.html" class="hover:text-neutral-300">Inicio</a>
+          <span class="mx-2">/</span>
+          <a href="index.html" class="hover:text-neutral-300">Trilha 3</a>
+          <span class="mx-2">/</span>
+          <span class="text-purple-400">Modulo 3.3</span>
+        </div>
+      </div>
+
+      <header class="bg-gradient-to-br from-purple-900/30 via-dark-900 to-dark-800 border-b border-dark-600">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <span class="inline-flex px-4 py-2 rounded-full text-xs font-semibold text-purple-400 bg-purple-500/20 border border-purple-500/30 mb-6">MODULO 3.3</span>
+          <h1 class="text-4xl font-bold mb-4">Do workshop a consultoria aplicada</h1>
+          <p class="text-neutral-400 max-w-3xl text-lg mb-8">Modelo de continuidade que conecta aprendizagem, diagnostico e implementacao.</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-4">
+      <div class="text-neutral-500 text-sm">Topicos</div>
+      <div class="font-bold text-lg">6</div>
+    </div>
+  
+            
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-4">
+      <div class="text-neutral-500 text-sm">Minutos</div>
+      <div class="font-bold text-lg">~35</div>
+    </div>
+  
+            
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-4">
+      <div class="text-neutral-500 text-sm">Nivel</div>
+      <div class="font-bold text-lg">Estrategico</div>
+    </div>
+  
+            
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-4">
+      <div class="text-neutral-500 text-sm">Tipo</div>
+      <div class="font-bold text-lg">Modulo</div>
+    </div>
+  
+          </div>
+        </div>
+      </header>
+
+      <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="lg:grid lg:grid-cols-[1fr_240px] lg:gap-10">
+          <div class="inema-prose">
+
+        <!-- Medidor do modulo -->
+        <div data-inema-meter="modulo:3-3" class="inema-bar-wrap mb-10 bg-dark-800 border border-dark-600 rounded-xl p-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do modulo 3.3">
+          <div class="flex items-center justify-between mb-2 text-sm">
+            <span class="text-neutral-400">Seu progresso neste módulo</span>
+            <span><span class="inema-meter-count" data-inema-meter-frac>0 de 6</span> · <span class="text-purple-400 font-semibold" data-inema-meter-pct>0%</span></span>
+          </div>
+          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
+        </div>
+
+      <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden max-w-4xl">
+        <svg viewBox="0 0 1000 300" class="w-full h-auto" role="img" aria-label="Modelo de continuidade do workshop a consultoria aplicada: workshop, diagnostico, trilha, acompanhamento, consultoria e implementacao, em sequencia crescente">
+          <defs>
+            <linearGradient id="m33-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+            <filter id="m33-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <pattern id="m33-grid" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="1.3" cy="1.3" r="1.3" fill="#a855f7" opacity="0.12"/></pattern>
+            <marker id="m33-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"/></marker>
+          </defs>
+          <rect x="0" y="0" width="1000" height="300" fill="url(#m33-grid)"/>
+          <path d="M80,256 L235,222 L390,188 L545,154 L700,120 L850,80" fill="none" stroke="#c084fc" stroke-width="1.8" stroke-dasharray="9 9" opacity="0.5" marker-end="url(#m33-ah)"/>
+          <g class="wf-a"><rect x="22" y="240" width="128" height="46" rx="11" fill="#1a1230" stroke="#c084fc" stroke-width="2"/></g>
+          <text x="86" y="262" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-weight="600" font-size="14">Workshop</text>
+          <text x="86" y="278" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10">ativacao</text>
+          <g class="wf-a"><rect x="177" y="206" width="128" height="46" rx="11" fill="#1a1230" stroke="#c084fc" stroke-width="2"/></g>
+          <text x="241" y="228" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-weight="600" font-size="14">Diagnostico</text>
+          <text x="241" y="244" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10">le maturidade</text>
+          <g class="wf-a"><rect x="332" y="172" width="128" height="46" rx="11" fill="#1a1230" stroke="#c084fc" stroke-width="2"/></g>
+          <text x="396" y="194" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-weight="600" font-size="14">Trilha</text>
+          <text x="396" y="210" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10">capacita</text>
+          <g class="wf-a"><rect x="487" y="138" width="128" height="46" rx="11" fill="#1a1230" stroke="#c084fc" stroke-width="2"/></g>
+          <text x="551" y="160" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-weight="600" font-size="14">Acompanha</text>
+          <text x="551" y="176" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10">sustenta</text>
+          <g filter="url(#m33-glow)"><rect x="642" y="100" width="138" height="50" rx="12" fill="#1a1230" stroke="url(#m33-grad)" stroke-width="2.5"/></g>
+          <text x="711" y="122" text-anchor="middle" fill="#c084fc" font-family="Inter,sans-serif" font-weight="700" font-size="14">Consultoria</text>
+          <text x="711" y="139" text-anchor="middle" fill="#e9d5ff" font-family="Inter,sans-serif" font-size="10">aplicada</text>
+          <g class="wf-a"><rect x="812" y="62" width="138" height="46" rx="11" fill="#0e1b26" stroke="#38bdf8" stroke-width="2"/></g>
+          <text x="881" y="84" text-anchor="middle" fill="#bfe6ff" font-family="Inter,sans-serif" font-weight="600" font-size="14">Implementacao</text>
+          <text x="881" y="100" text-anchor="middle" fill="#9ad6ff" font-family="Inter,sans-serif" font-size="10">ultima camada</text>
+        </svg>
+      </div>
+
+      <section id="topico-1" data-inema-topic="modulo-3-3#topico-1" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl flex-shrink-0">1</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Workshop ou palestra</h2>
+              <p class="text-neutral-400">Primeira ativacao. A experiencia inicial gera repertorio, alinhamento e visibilidade. Neste modulo, o foco e transformar esse conceito em criterio pratico para desenhar jornadas de transformacao e continuidade com mais maturidade.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class=" rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-purple-400 mb-2">Conceito principal</h3>
+            <p data-inema-block="m3-3-t1-p1" class="text-neutral-300 mb-4">A experiencia inicial gera repertorio, alinhamento e visibilidade. Em termos de curso, isso significa sair da definicao rapida e explicar como o tema afeta comportamento, leitura de contexto e qualidade de decisao.</p>
+            <p class="text-neutral-300">Quando o aluno entende workshop ou palestra com profundidade, ele deixa de repetir frases de efeito e passa a enxergar onde esse assunto aparece no cotidiano de pessoas, equipes e liderancas.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura aprofundada</h3>
+            <p class="text-neutral-300 mb-4">Ela funciona como ponto de partida para uma conversa mais concreta. O erro mais comum aqui e tratar o topico como algo teorico demais ou generico demais. No PHA 2030, cada assunto precisa ser conectado a uma dor reconhecivel, a uma conversa real ou a um movimento de maturidade.</p>
+            <p class="text-neutral-300">Na pratica, este ponto influencia a forma como uma sessao e preparada, como uma lideranca percebe valor e como uma equipe traduz interesse inicial em uso consistente. Por isso, a leitura de contexto precisa ser mais explicativa do que apenas inspiracional.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Exemplo orientado</h3>
+            <p class="text-neutral-300 mb-4">Imagine um cliente que saiu de um workshop inspirado, mas ainda sem proximo passo claro. Ao aplicar workshop ou palestra, voce mostra como a conversa pode evoluir para diagnostico, trilha, acompanhamento e uma mudanca mais sustentada do que uma entrega isolada.</p>
+            <p class="text-neutral-300">Depois do exemplo, o papel do facilitador e explicitar o raciocinio: qual era o problema inicial, por que esse topico ajudou a organizar melhor a situacao e que proximo passo concreto passa a fazer sentido a partir daqui.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como ensinar ou aplicar este topico</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-purple-400 font-semibold">1.</span> Comece definindo o problema em linguagem simples, sem jargao tecnico e sem correr para ferramenta. O aluno precisa primeiro reconhecer a situacao antes de admirar a solucao.</div><div><span class="text-purple-400 font-semibold">2.</span> Mostre como workshop ou palestra altera a leitura do caso. Explique o antes, o durante e o depois, deixando claro o ganho de clareza, velocidade, criterio ou autonomia.</div><div><span class="text-purple-400 font-semibold">3.</span> Feche com uma transferencia direta para o contexto do aluno: qual tarefa, reuniao, discovery, workshop ou conversa comercial pode ser melhor conduzida usando este raciocinio.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Explicacao detalhada</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Se este topico fosse tratado como um capitulo de livro, a primeira tarefa seria desmontar a superficialidade. Workshop ou palestra nao deve aparecer como slogan. Ele precisa ser mostrado como uma lente que ajuda a interpretar o momento atual do mercado, o comportamento das pessoas e as decisoes que fazem uma entrega gerar ou nao gerar transformacao real.</p><p>O segundo passo e aprofundar a implicacao pratica. Em muitos contextos, a equipe ja ouviu falar sobre o assunto, mas ainda nao o converteu em rotina, criterio ou linguagem compartilhada. E por isso que o PHA 2030 insiste tanto em explicacao detalhada: uma organizacao so muda de patamar quando consegue nomear melhor o problema, reconhecer melhor a oportunidade e agir de modo mais intencional.</p><p>Tambem e importante mostrar tensao e limite. Workshop ou palestra nao resolve tudo sozinho. Ele ganha forca quando entra no desenho maior do modulo 3.3, conversa com os outros topicos da trilha 3 e ajuda a deslocar o aluno de curiosidade para capacidade. Essa costura entre capitulos e o que faz o curso parecer uma obra completa, e nao apenas uma colecao de slides expandidos.</p><p>Por fim, esse assunto precisa terminar com clareza operacional. O aluno deve sair sabendo como observar workshop, palestra, repertorio, como explicar isso para outra pessoa e como usar essa leitura para melhorar aula, workshop, discovery, diagnostico ou proposta. Esse fechamento e o que transforma conteudo em instrumento de trabalho.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-purple-500/30 bg-purple-500/10 p-6">
+              <h3 class="text-lg font-semibold text-purple-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Reduzir workshop ou palestra a um comentario rapido sem explorar implicacoes reais.</li><li>Explicar o tema de forma abstrata, sem caso, sem contexto e sem conexao com a dor da sala.</li><li>Encerrar o assunto sem traduzir o que muda na pratica para o aluno, equipe ou empresa.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de reflexao</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Como este topico aparece hoje no meu contexto de forma mal explicada, fragmentada ou superficial?</p><p>Que tipo de decisao melhora quando eu passo a enxergar workshop ou palestra com mais profundidade?</p><p>Se eu fosse ensinar este assunto amanha, que exemplo real usaria para que a turma reconhecesse valor imediato?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Conceitos-chave para memorizar</h3>
+            <p class="text-neutral-300 mb-4">workshop, palestra, repertorio, alinhamento, visibilidade</p>
+            <p class="text-neutral-300">Memorize este ponto assim: Workshop ou palestra so ganha valor completo quando sai do resumo e entra na explicacao. O objetivo do modulo nao e apenas informar, mas dar repertorio suficiente para analisar, ensinar e aplicar o tema com seguranca.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    
+      <section id="topico-2" data-inema-topic="modulo-3-3#topico-2" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl flex-shrink-0">2</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Diagnostico ou auditoria</h2>
+              <p class="text-neutral-400">Ler maturidade e gargalos. Depois da sensibilizacao, o proximo passo e investigar realidade, risco e oportunidade. Neste modulo, o foco e transformar esse conceito em criterio pratico para desenhar jornadas de transformacao e continuidade com mais maturidade.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class=" rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-purple-400 mb-2">Conceito principal</h3>
+            <p data-inema-block="m3-3-t2-p1" class="text-neutral-300 mb-4">Depois da sensibilizacao, o proximo passo e investigar realidade, risco e oportunidade. Em termos de curso, isso significa sair da definicao rapida e explicar como o tema afeta comportamento, leitura de contexto e qualidade de decisao.</p>
+            <p class="text-neutral-300">Quando o aluno entende diagnostico ou auditoria com profundidade, ele deixa de repetir frases de efeito e passa a enxergar onde esse assunto aparece no cotidiano de pessoas, equipes e liderancas.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura aprofundada</h3>
+            <p class="text-neutral-300 mb-4">Essa etapa organiza prioridades e reduz generalidade. O erro mais comum aqui e tratar o topico como algo teorico demais ou generico demais. No PHA 2030, cada assunto precisa ser conectado a uma dor reconhecivel, a uma conversa real ou a um movimento de maturidade.</p>
+            <p class="text-neutral-300">Na pratica, este ponto influencia a forma como uma sessao e preparada, como uma lideranca percebe valor e como uma equipe traduz interesse inicial em uso consistente. Por isso, a leitura de contexto precisa ser mais explicativa do que apenas inspiracional.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Exemplo orientado</h3>
+            <p class="text-neutral-300 mb-4">Imagine um cliente que saiu de um workshop inspirado, mas ainda sem proximo passo claro. Ao aplicar diagnostico ou auditoria, voce mostra como a conversa pode evoluir para diagnostico, trilha, acompanhamento e uma mudanca mais sustentada do que uma entrega isolada.</p>
+            <p class="text-neutral-300">Depois do exemplo, o papel do facilitador e explicitar o raciocinio: qual era o problema inicial, por que esse topico ajudou a organizar melhor a situacao e que proximo passo concreto passa a fazer sentido a partir daqui.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como ensinar ou aplicar este topico</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-purple-400 font-semibold">1.</span> Comece definindo o problema em linguagem simples, sem jargao tecnico e sem correr para ferramenta. O aluno precisa primeiro reconhecer a situacao antes de admirar a solucao.</div><div><span class="text-purple-400 font-semibold">2.</span> Mostre como diagnostico ou auditoria altera a leitura do caso. Explique o antes, o durante e o depois, deixando claro o ganho de clareza, velocidade, criterio ou autonomia.</div><div><span class="text-purple-400 font-semibold">3.</span> Feche com uma transferencia direta para o contexto do aluno: qual tarefa, reuniao, discovery, workshop ou conversa comercial pode ser melhor conduzida usando este raciocinio.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Explicacao detalhada</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Se este topico fosse tratado como um capitulo de livro, a primeira tarefa seria desmontar a superficialidade. Diagnostico ou auditoria nao deve aparecer como slogan. Ele precisa ser mostrado como uma lente que ajuda a interpretar o momento atual do mercado, o comportamento das pessoas e as decisoes que fazem uma entrega gerar ou nao gerar transformacao real.</p><p>O segundo passo e aprofundar a implicacao pratica. Em muitos contextos, a equipe ja ouviu falar sobre o assunto, mas ainda nao o converteu em rotina, criterio ou linguagem compartilhada. E por isso que o PHA 2030 insiste tanto em explicacao detalhada: uma organizacao so muda de patamar quando consegue nomear melhor o problema, reconhecer melhor a oportunidade e agir de modo mais intencional.</p><p>Tambem e importante mostrar tensao e limite. Diagnostico ou auditoria nao resolve tudo sozinho. Ele ganha forca quando entra no desenho maior do modulo 3.3, conversa com os outros topicos da trilha 3 e ajuda a deslocar o aluno de curiosidade para capacidade. Essa costura entre capitulos e o que faz o curso parecer uma obra completa, e nao apenas uma colecao de slides expandidos.</p><p>Por fim, esse assunto precisa terminar com clareza operacional. O aluno deve sair sabendo como observar diagnostico, auditoria, maturidade, como explicar isso para outra pessoa e como usar essa leitura para melhorar aula, workshop, discovery, diagnostico ou proposta. Esse fechamento e o que transforma conteudo em instrumento de trabalho.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-purple-500/30 bg-purple-500/10 p-6">
+              <h3 class="text-lg font-semibold text-purple-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Reduzir diagnostico ou auditoria a um comentario rapido sem explorar implicacoes reais.</li><li>Explicar o tema de forma abstrata, sem caso, sem contexto e sem conexao com a dor da sala.</li><li>Encerrar o assunto sem traduzir o que muda na pratica para o aluno, equipe ou empresa.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de reflexao</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Como este topico aparece hoje no meu contexto de forma mal explicada, fragmentada ou superficial?</p><p>Que tipo de decisao melhora quando eu passo a enxergar diagnostico ou auditoria com mais profundidade?</p><p>Se eu fosse ensinar este assunto amanha, que exemplo real usaria para que a turma reconhecesse valor imediato?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Conceitos-chave para memorizar</h3>
+            <p class="text-neutral-300 mb-4">diagnostico, auditoria, maturidade, gargalos, prioridades</p>
+            <p class="text-neutral-300">Memorize este ponto assim: Diagnostico ou auditoria so ganha valor completo quando sai do resumo e entra na explicacao. O objetivo do modulo nao e apenas informar, mas dar repertorio suficiente para analisar, ensinar e aplicar o tema com seguranca.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    
+      <section id="topico-3" data-inema-topic="modulo-3-3#topico-3" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl flex-shrink-0">3</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Trilha de capacitacao</h2>
+              <p class="text-neutral-400">Desenvolver capacidade por etapas. Com o diagnostico em maos, a capacitacao pode ser desenhada por area, perfil ou objetivo. Neste modulo, o foco e transformar esse conceito em criterio pratico para desenhar jornadas de transformacao e continuidade com mais maturidade.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class=" rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-purple-400 mb-2">Conceito principal</h3>
+            <p data-inema-block="m3-3-t3-p1" class="text-neutral-300 mb-4">Com o diagnostico em maos, a capacitacao pode ser desenhada por area, perfil ou objetivo. Em termos de curso, isso significa sair da definicao rapida e explicar como o tema afeta comportamento, leitura de contexto e qualidade de decisao.</p>
+            <p class="text-neutral-300">Quando o aluno entende trilha de capacitacao com profundidade, ele deixa de repetir frases de efeito e passa a enxergar onde esse assunto aparece no cotidiano de pessoas, equipes e liderancas.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura aprofundada</h3>
+            <p class="text-neutral-300 mb-4">Isso aumenta relevancia e aderencia. O erro mais comum aqui e tratar o topico como algo teorico demais ou generico demais. No PHA 2030, cada assunto precisa ser conectado a uma dor reconhecivel, a uma conversa real ou a um movimento de maturidade.</p>
+            <p class="text-neutral-300">Na pratica, este ponto influencia a forma como uma sessao e preparada, como uma lideranca percebe valor e como uma equipe traduz interesse inicial em uso consistente. Por isso, a leitura de contexto precisa ser mais explicativa do que apenas inspiracional.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Exemplo orientado</h3>
+            <p class="text-neutral-300 mb-4">Imagine um cliente que saiu de um workshop inspirado, mas ainda sem proximo passo claro. Ao aplicar trilha de capacitacao, voce mostra como a conversa pode evoluir para diagnostico, trilha, acompanhamento e uma mudanca mais sustentada do que uma entrega isolada.</p>
+            <p class="text-neutral-300">Depois do exemplo, o papel do facilitador e explicitar o raciocinio: qual era o problema inicial, por que esse topico ajudou a organizar melhor a situacao e que proximo passo concreto passa a fazer sentido a partir daqui.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como ensinar ou aplicar este topico</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-purple-400 font-semibold">1.</span> Comece definindo o problema em linguagem simples, sem jargao tecnico e sem correr para ferramenta. O aluno precisa primeiro reconhecer a situacao antes de admirar a solucao.</div><div><span class="text-purple-400 font-semibold">2.</span> Mostre como trilha de capacitacao altera a leitura do caso. Explique o antes, o durante e o depois, deixando claro o ganho de clareza, velocidade, criterio ou autonomia.</div><div><span class="text-purple-400 font-semibold">3.</span> Feche com uma transferencia direta para o contexto do aluno: qual tarefa, reuniao, discovery, workshop ou conversa comercial pode ser melhor conduzida usando este raciocinio.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Explicacao detalhada</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Se este topico fosse tratado como um capitulo de livro, a primeira tarefa seria desmontar a superficialidade. Trilha de capacitacao nao deve aparecer como slogan. Ele precisa ser mostrado como uma lente que ajuda a interpretar o momento atual do mercado, o comportamento das pessoas e as decisoes que fazem uma entrega gerar ou nao gerar transformacao real.</p><p>O segundo passo e aprofundar a implicacao pratica. Em muitos contextos, a equipe ja ouviu falar sobre o assunto, mas ainda nao o converteu em rotina, criterio ou linguagem compartilhada. E por isso que o PHA 2030 insiste tanto em explicacao detalhada: uma organizacao so muda de patamar quando consegue nomear melhor o problema, reconhecer melhor a oportunidade e agir de modo mais intencional.</p><p>Tambem e importante mostrar tensao e limite. Trilha de capacitacao nao resolve tudo sozinho. Ele ganha forca quando entra no desenho maior do modulo 3.3, conversa com os outros topicos da trilha 3 e ajuda a deslocar o aluno de curiosidade para capacidade. Essa costura entre capitulos e o que faz o curso parecer uma obra completa, e nao apenas uma colecao de slides expandidos.</p><p>Por fim, esse assunto precisa terminar com clareza operacional. O aluno deve sair sabendo como observar trilha, capacidade, area, como explicar isso para outra pessoa e como usar essa leitura para melhorar aula, workshop, discovery, diagnostico ou proposta. Esse fechamento e o que transforma conteudo em instrumento de trabalho.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-purple-500/30 bg-purple-500/10 p-6">
+              <h3 class="text-lg font-semibold text-purple-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Reduzir trilha de capacitacao a um comentario rapido sem explorar implicacoes reais.</li><li>Explicar o tema de forma abstrata, sem caso, sem contexto e sem conexao com a dor da sala.</li><li>Encerrar o assunto sem traduzir o que muda na pratica para o aluno, equipe ou empresa.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de reflexao</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Como este topico aparece hoje no meu contexto de forma mal explicada, fragmentada ou superficial?</p><p>Que tipo de decisao melhora quando eu passo a enxergar trilha de capacitacao com mais profundidade?</p><p>Se eu fosse ensinar este assunto amanha, que exemplo real usaria para que a turma reconhecesse valor imediato?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Conceitos-chave para memorizar</h3>
+            <p class="text-neutral-300 mb-4">trilha, capacidade, area, perfil, aderencia</p>
+            <p class="text-neutral-300">Memorize este ponto assim: Trilha de capacitacao so ganha valor completo quando sai do resumo e entra na explicacao. O objetivo do modulo nao e apenas informar, mas dar repertorio suficiente para analisar, ensinar e aplicar o tema com seguranca.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    
+      <section id="topico-4" data-inema-topic="modulo-3-3#topico-4" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl flex-shrink-0">4</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Acompanhamento estrategico</h2>
+              <p class="text-neutral-400">Garantir traducao para rotina. Acompanhamento serve para revisar uso, remover travas e sustentar comportamento novo. Neste modulo, o foco e transformar esse conceito em criterio pratico para desenhar jornadas de transformacao e continuidade com mais maturidade.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class=" rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-purple-400 mb-2">Conceito principal</h3>
+            <p data-inema-block="m3-3-t4-p1" class="text-neutral-300 mb-4">Acompanhamento serve para revisar uso, remover travas e sustentar comportamento novo. Em termos de curso, isso significa sair da definicao rapida e explicar como o tema afeta comportamento, leitura de contexto e qualidade de decisao.</p>
+            <p class="text-neutral-300">Quando o aluno entende acompanhamento estrategico com profundidade, ele deixa de repetir frases de efeito e passa a enxergar onde esse assunto aparece no cotidiano de pessoas, equipes e liderancas.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura aprofundada</h3>
+            <p class="text-neutral-300 mb-4">Sem isso, a energia inicial pode se dissipar. O erro mais comum aqui e tratar o topico como algo teorico demais ou generico demais. No PHA 2030, cada assunto precisa ser conectado a uma dor reconhecivel, a uma conversa real ou a um movimento de maturidade.</p>
+            <p class="text-neutral-300">Na pratica, este ponto influencia a forma como uma sessao e preparada, como uma lideranca percebe valor e como uma equipe traduz interesse inicial em uso consistente. Por isso, a leitura de contexto precisa ser mais explicativa do que apenas inspiracional.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Exemplo orientado</h3>
+            <p class="text-neutral-300 mb-4">Imagine um cliente que saiu de um workshop inspirado, mas ainda sem proximo passo claro. Ao aplicar acompanhamento estrategico, voce mostra como a conversa pode evoluir para diagnostico, trilha, acompanhamento e uma mudanca mais sustentada do que uma entrega isolada.</p>
+            <p class="text-neutral-300">Depois do exemplo, o papel do facilitador e explicitar o raciocinio: qual era o problema inicial, por que esse topico ajudou a organizar melhor a situacao e que proximo passo concreto passa a fazer sentido a partir daqui.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como ensinar ou aplicar este topico</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-purple-400 font-semibold">1.</span> Comece definindo o problema em linguagem simples, sem jargao tecnico e sem correr para ferramenta. O aluno precisa primeiro reconhecer a situacao antes de admirar a solucao.</div><div><span class="text-purple-400 font-semibold">2.</span> Mostre como acompanhamento estrategico altera a leitura do caso. Explique o antes, o durante e o depois, deixando claro o ganho de clareza, velocidade, criterio ou autonomia.</div><div><span class="text-purple-400 font-semibold">3.</span> Feche com uma transferencia direta para o contexto do aluno: qual tarefa, reuniao, discovery, workshop ou conversa comercial pode ser melhor conduzida usando este raciocinio.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Explicacao detalhada</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Se este topico fosse tratado como um capitulo de livro, a primeira tarefa seria desmontar a superficialidade. Acompanhamento estrategico nao deve aparecer como slogan. Ele precisa ser mostrado como uma lente que ajuda a interpretar o momento atual do mercado, o comportamento das pessoas e as decisoes que fazem uma entrega gerar ou nao gerar transformacao real.</p><p>O segundo passo e aprofundar a implicacao pratica. Em muitos contextos, a equipe ja ouviu falar sobre o assunto, mas ainda nao o converteu em rotina, criterio ou linguagem compartilhada. E por isso que o PHA 2030 insiste tanto em explicacao detalhada: uma organizacao so muda de patamar quando consegue nomear melhor o problema, reconhecer melhor a oportunidade e agir de modo mais intencional.</p><p>Tambem e importante mostrar tensao e limite. Acompanhamento estrategico nao resolve tudo sozinho. Ele ganha forca quando entra no desenho maior do modulo 3.3, conversa com os outros topicos da trilha 3 e ajuda a deslocar o aluno de curiosidade para capacidade. Essa costura entre capitulos e o que faz o curso parecer uma obra completa, e nao apenas uma colecao de slides expandidos.</p><p>Por fim, esse assunto precisa terminar com clareza operacional. O aluno deve sair sabendo como observar acompanhamento, rotina, travas, como explicar isso para outra pessoa e como usar essa leitura para melhorar aula, workshop, discovery, diagnostico ou proposta. Esse fechamento e o que transforma conteudo em instrumento de trabalho.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-purple-500/30 bg-purple-500/10 p-6">
+              <h3 class="text-lg font-semibold text-purple-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Reduzir acompanhamento estrategico a um comentario rapido sem explorar implicacoes reais.</li><li>Explicar o tema de forma abstrata, sem caso, sem contexto e sem conexao com a dor da sala.</li><li>Encerrar o assunto sem traduzir o que muda na pratica para o aluno, equipe ou empresa.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de reflexao</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Como este topico aparece hoje no meu contexto de forma mal explicada, fragmentada ou superficial?</p><p>Que tipo de decisao melhora quando eu passo a enxergar acompanhamento estrategico com mais profundidade?</p><p>Se eu fosse ensinar este assunto amanha, que exemplo real usaria para que a turma reconhecesse valor imediato?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Conceitos-chave para memorizar</h3>
+            <p class="text-neutral-300 mb-4">acompanhamento, rotina, travas, comportamento, sustentacao</p>
+            <p class="text-neutral-300">Memorize este ponto assim: Acompanhamento estrategico so ganha valor completo quando sai do resumo e entra na explicacao. O objetivo do modulo nao e apenas informar, mas dar repertorio suficiente para analisar, ensinar e aplicar o tema com seguranca.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    
+      <section id="topico-5" data-inema-topic="modulo-3-3#topico-5" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl flex-shrink-0">5</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Consultoria aplicada</h2>
+              <p class="text-neutral-400">Aprofundar quando fizer sentido. A consultoria entra melhor quando o cliente ja ganhou clareza e linguagem para priorizar. Neste modulo, o foco e transformar esse conceito em criterio pratico para desenhar jornadas de transformacao e continuidade com mais maturidade.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class=" rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-purple-400 mb-2">Conceito principal</h3>
+            <p data-inema-block="m3-3-t5-p1" class="text-neutral-300 mb-4">A consultoria entra melhor quando o cliente ja ganhou clareza e linguagem para priorizar. Em termos de curso, isso significa sair da definicao rapida e explicar como o tema afeta comportamento, leitura de contexto e qualidade de decisao.</p>
+            <p class="text-neutral-300">Quando o aluno entende consultoria aplicada com profundidade, ele deixa de repetir frases de efeito e passa a enxergar onde esse assunto aparece no cotidiano de pessoas, equipes e liderancas.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura aprofundada</h3>
+            <p class="text-neutral-300 mb-4">Assim a execucao passa a ter mais qualidade e menos desgaste. O erro mais comum aqui e tratar o topico como algo teorico demais ou generico demais. No PHA 2030, cada assunto precisa ser conectado a uma dor reconhecivel, a uma conversa real ou a um movimento de maturidade.</p>
+            <p class="text-neutral-300">Na pratica, este ponto influencia a forma como uma sessao e preparada, como uma lideranca percebe valor e como uma equipe traduz interesse inicial em uso consistente. Por isso, a leitura de contexto precisa ser mais explicativa do que apenas inspiracional.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Exemplo orientado</h3>
+            <p class="text-neutral-300 mb-4">Imagine um cliente que saiu de um workshop inspirado, mas ainda sem proximo passo claro. Ao aplicar consultoria aplicada, voce mostra como a conversa pode evoluir para diagnostico, trilha, acompanhamento e uma mudanca mais sustentada do que uma entrega isolada.</p>
+            <p class="text-neutral-300">Depois do exemplo, o papel do facilitador e explicitar o raciocinio: qual era o problema inicial, por que esse topico ajudou a organizar melhor a situacao e que proximo passo concreto passa a fazer sentido a partir daqui.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como ensinar ou aplicar este topico</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-purple-400 font-semibold">1.</span> Comece definindo o problema em linguagem simples, sem jargao tecnico e sem correr para ferramenta. O aluno precisa primeiro reconhecer a situacao antes de admirar a solucao.</div><div><span class="text-purple-400 font-semibold">2.</span> Mostre como consultoria aplicada altera a leitura do caso. Explique o antes, o durante e o depois, deixando claro o ganho de clareza, velocidade, criterio ou autonomia.</div><div><span class="text-purple-400 font-semibold">3.</span> Feche com uma transferencia direta para o contexto do aluno: qual tarefa, reuniao, discovery, workshop ou conversa comercial pode ser melhor conduzida usando este raciocinio.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Explicacao detalhada</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Se este topico fosse tratado como um capitulo de livro, a primeira tarefa seria desmontar a superficialidade. Consultoria aplicada nao deve aparecer como slogan. Ele precisa ser mostrado como uma lente que ajuda a interpretar o momento atual do mercado, o comportamento das pessoas e as decisoes que fazem uma entrega gerar ou nao gerar transformacao real.</p><p>O segundo passo e aprofundar a implicacao pratica. Em muitos contextos, a equipe ja ouviu falar sobre o assunto, mas ainda nao o converteu em rotina, criterio ou linguagem compartilhada. E por isso que o PHA 2030 insiste tanto em explicacao detalhada: uma organizacao so muda de patamar quando consegue nomear melhor o problema, reconhecer melhor a oportunidade e agir de modo mais intencional.</p><p>Tambem e importante mostrar tensao e limite. Consultoria aplicada nao resolve tudo sozinho. Ele ganha forca quando entra no desenho maior do modulo 3.3, conversa com os outros topicos da trilha 3 e ajuda a deslocar o aluno de curiosidade para capacidade. Essa costura entre capitulos e o que faz o curso parecer uma obra completa, e nao apenas uma colecao de slides expandidos.</p><p>Por fim, esse assunto precisa terminar com clareza operacional. O aluno deve sair sabendo como observar consultoria, clareza, linguagem, como explicar isso para outra pessoa e como usar essa leitura para melhorar aula, workshop, discovery, diagnostico ou proposta. Esse fechamento e o que transforma conteudo em instrumento de trabalho.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-purple-500/30 bg-purple-500/10 p-6">
+              <h3 class="text-lg font-semibold text-purple-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Reduzir consultoria aplicada a um comentario rapido sem explorar implicacoes reais.</li><li>Explicar o tema de forma abstrata, sem caso, sem contexto e sem conexao com a dor da sala.</li><li>Encerrar o assunto sem traduzir o que muda na pratica para o aluno, equipe ou empresa.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de reflexao</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Como este topico aparece hoje no meu contexto de forma mal explicada, fragmentada ou superficial?</p><p>Que tipo de decisao melhora quando eu passo a enxergar consultoria aplicada com mais profundidade?</p><p>Se eu fosse ensinar este assunto amanha, que exemplo real usaria para que a turma reconhecesse valor imediato?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Conceitos-chave para memorizar</h3>
+            <p class="text-neutral-300 mb-4">consultoria, clareza, linguagem, priorizacao, qualidade</p>
+            <p class="text-neutral-300">Memorize este ponto assim: Consultoria aplicada so ganha valor completo quando sai do resumo e entra na explicacao. O objetivo do modulo nao e apenas informar, mas dar repertorio suficiente para analisar, ensinar e aplicar o tema com seguranca.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    
+      <section id="topico-6" data-inema-topic="modulo-3-3#topico-6" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl flex-shrink-0">6</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Implementacao como ultima camada</h2>
+              <p class="text-neutral-400">Executar com contexto amadurecido. Implementacoes fazem mais sentido depois que o terreno humano e organizacional foi preparado. Neste modulo, o foco e transformar esse conceito em criterio pratico para desenhar jornadas de transformacao e continuidade com mais maturidade.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class=" rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-purple-400 mb-2">Conceito principal</h3>
+            <p data-inema-block="m3-3-t6-p1" class="text-neutral-300 mb-4">Implementacoes fazem mais sentido depois que o terreno humano e organizacional foi preparado. Em termos de curso, isso significa sair da definicao rapida e explicar como o tema afeta comportamento, leitura de contexto e qualidade de decisao.</p>
+            <p class="text-neutral-300">Quando o aluno entende implementacao como ultima camada com profundidade, ele deixa de repetir frases de efeito e passa a enxergar onde esse assunto aparece no cotidiano de pessoas, equipes e liderancas.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura aprofundada</h3>
+            <p class="text-neutral-300 mb-4">Essa sequencia melhora retorno e reduz dependencia improdutiva. O erro mais comum aqui e tratar o topico como algo teorico demais ou generico demais. No PHA 2030, cada assunto precisa ser conectado a uma dor reconhecivel, a uma conversa real ou a um movimento de maturidade.</p>
+            <p class="text-neutral-300">Na pratica, este ponto influencia a forma como uma sessao e preparada, como uma lideranca percebe valor e como uma equipe traduz interesse inicial em uso consistente. Por isso, a leitura de contexto precisa ser mais explicativa do que apenas inspiracional.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Exemplo orientado</h3>
+            <p class="text-neutral-300 mb-4">Imagine um cliente que saiu de um workshop inspirado, mas ainda sem proximo passo claro. Ao aplicar implementacao como ultima camada, voce mostra como a conversa pode evoluir para diagnostico, trilha, acompanhamento e uma mudanca mais sustentada do que uma entrega isolada.</p>
+            <p class="text-neutral-300">Depois do exemplo, o papel do facilitador e explicitar o raciocinio: qual era o problema inicial, por que esse topico ajudou a organizar melhor a situacao e que proximo passo concreto passa a fazer sentido a partir daqui.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como ensinar ou aplicar este topico</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-purple-400 font-semibold">1.</span> Comece definindo o problema em linguagem simples, sem jargao tecnico e sem correr para ferramenta. O aluno precisa primeiro reconhecer a situacao antes de admirar a solucao.</div><div><span class="text-purple-400 font-semibold">2.</span> Mostre como implementacao como ultima camada altera a leitura do caso. Explique o antes, o durante e o depois, deixando claro o ganho de clareza, velocidade, criterio ou autonomia.</div><div><span class="text-purple-400 font-semibold">3.</span> Feche com uma transferencia direta para o contexto do aluno: qual tarefa, reuniao, discovery, workshop ou conversa comercial pode ser melhor conduzida usando este raciocinio.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Explicacao detalhada</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Se este topico fosse tratado como um capitulo de livro, a primeira tarefa seria desmontar a superficialidade. Implementacao como ultima camada nao deve aparecer como slogan. Ele precisa ser mostrado como uma lente que ajuda a interpretar o momento atual do mercado, o comportamento das pessoas e as decisoes que fazem uma entrega gerar ou nao gerar transformacao real.</p><p>O segundo passo e aprofundar a implicacao pratica. Em muitos contextos, a equipe ja ouviu falar sobre o assunto, mas ainda nao o converteu em rotina, criterio ou linguagem compartilhada. E por isso que o PHA 2030 insiste tanto em explicacao detalhada: uma organizacao so muda de patamar quando consegue nomear melhor o problema, reconhecer melhor a oportunidade e agir de modo mais intencional.</p><p>Tambem e importante mostrar tensao e limite. Implementacao como ultima camada nao resolve tudo sozinho. Ele ganha forca quando entra no desenho maior do modulo 3.3, conversa com os outros topicos da trilha 3 e ajuda a deslocar o aluno de curiosidade para capacidade. Essa costura entre capitulos e o que faz o curso parecer uma obra completa, e nao apenas uma colecao de slides expandidos.</p><p>Por fim, esse assunto precisa terminar com clareza operacional. O aluno deve sair sabendo como observar implementacao, contexto, sequencia, como explicar isso para outra pessoa e como usar essa leitura para melhorar aula, workshop, discovery, diagnostico ou proposta. Esse fechamento e o que transforma conteudo em instrumento de trabalho.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-purple-500/30 bg-purple-500/10 p-6">
+              <h3 class="text-lg font-semibold text-purple-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Reduzir implementacao como ultima camada a um comentario rapido sem explorar implicacoes reais.</li><li>Explicar o tema de forma abstrata, sem caso, sem contexto e sem conexao com a dor da sala.</li><li>Encerrar o assunto sem traduzir o que muda na pratica para o aluno, equipe ou empresa.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de reflexao</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Como este topico aparece hoje no meu contexto de forma mal explicada, fragmentada ou superficial?</p><p>Que tipo de decisao melhora quando eu passo a enxergar implementacao como ultima camada com mais profundidade?</p><p>Se eu fosse ensinar este assunto amanha, que exemplo real usaria para que a turma reconhecesse valor imediato?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Conceitos-chave para memorizar</h3>
+            <p class="text-neutral-300 mb-4">implementacao, contexto, sequencia, retorno, dependencia</p>
+            <p class="text-neutral-300">Memorize este ponto assim: Implementacao como ultima camada so ganha valor completo quando sai do resumo e entra na explicacao. O objetivo do modulo nao e apenas informar, mas dar repertorio suficiente para analisar, ensinar e aplicar o tema com seguranca.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+
+        <section class="rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/30 to-transparent p-8">
+          <h2 class="text-2xl font-bold mb-4">Resumo final</h2>
+          <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div class="bg-dark-800 rounded-xl p-4 text-neutral-300">✓ Workshop ou palestra</div><div class="bg-dark-800 rounded-xl p-4 text-neutral-300">✓ Diagnostico ou auditoria</div><div class="bg-dark-800 rounded-xl p-4 text-neutral-300">✓ Trilha de capacitacao</div><div class="bg-dark-800 rounded-xl p-4 text-neutral-300">✓ Acompanhamento estrategico</div>
+          </div>
+          <p class="text-neutral-300 mb-6">O objetivo deste modulo e transformar repertorio em capacidade aplicada. Use os topicos como roteiro de conversa, aula, workshop ou proposta comercial.</p>
+          <div class="flex justify-start space-x-3">
+            <a href="index.html" class="px-4 py-2 text-sm bg-dark-700 hover:bg-dark-600 rounded-lg transition-colors">Voltar para Trilha</a>
+            <a href="modulo-3-4.html" class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors">Proximo Modulo</a>
+          </div>
+        </section>
+
+          </div>
+
+          <!-- TOC -->
+          <aside>
+            <nav data-inema-toc aria-label="Índice da página" class="hidden lg:block sticky top-24 self-start">
+              <p class="text-sm text-neutral-400 mb-3">Seção <span data-inema-section-counter>1 de 6</span></p>
+              <ol class="space-y-1 text-sm">
+                <li><a href="#topico-1" class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400">1. Workshop ou palestra</a></li>
+                <li><a href="#topico-2" class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400">2. Diagnóstico ou auditoria</a></li>
+                <li><a href="#topico-3" class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400">3. Trilha de capacitação</a></li>
+                <li><a href="#topico-4" class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400">4. Acompanhamento estratégico</a></li>
+                <li><a href="#topico-5" class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400">5. Consultoria aplicada</a></li>
+                <li><a href="#topico-6" class="inema-toc-link block py-1 text-neutral-400 hover:text-purple-400">6. Implementação como última camada</a></li>
+              </ol>
+            </nav>
+          </aside>
+        </div>
+      </main>
+    
+  <footer class="border-t border-dark-600 py-8 mt-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-sm text-neutral-500">
+      PHA 2030 | Preparar humanos para operar o futuro.
+    </div>
+  </footer>
+  <script>
+    function toggleTopic(button) {
+      const current = button.parentElement;
+      const container = current.parentElement;
+      const explanation = current.querySelector('.topic-explanation');
+      const items = container.querySelectorAll('.topic-item .topic-explanation');
+      items.forEach((item) => {
+        if (item !== explanation) item.classList.add('hidden');
+      });
+      explanation.classList.toggle('hidden');
+    }
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('[id^="modal-"]').forEach((modal) => modal.classList.add('hidden'));
+        document.body.style.overflow = '';
+      }
+    });
+
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const isDark = () => document.documentElement.classList.contains('dark');
+    const syncIcons = () => {
+      themeToggleDarkIcon.classList.toggle('hidden', !isDark());
+      themeToggleLightIcon.classList.toggle('hidden', isDark());
+    };
+    syncIcons();
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      document.documentElement.style.colorScheme = isDark() ? 'dark' : 'light';
+      localStorage.setItem('theme', isDark() ? 'dark' : 'light');
+      try { if (window.INEMA && INEMA.setPref) INEMA.setPref('theme', isDark() ? 'inema-dark' : 'claro'); } catch (e) {}
+      syncIcons();
+    });
+  </script>
+
+  <!-- CAMADA DE APRENDIZAGEM -->
+  <script src="../../assets/learn.js"></script>
+  <script>if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }</script>
+</body>
+</html>

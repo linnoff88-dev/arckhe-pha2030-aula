@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="inema-course" content="pha2030">
+  <title>Modulo 1.4 | PHA 2030</title>
+
+  <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
+  <script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
+      html.setAttribute('data-font', p.font || 'inter');
+      html.setAttribute('data-accent', p.accent || 'emerald');
+      var s = html.style, scale = (+p.fontScale||100);
+      s.setProperty('--inema-font-scale', (scale/100).toString());
+      s.setProperty('font-size', scale + '%');
+      s.setProperty('--measure', (+p.lineWidth||68) + 'ch');
+      s.setProperty('--lh-body', (+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible", "Inter", system-ui, sans-serif' : '"Inter", system-ui, sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent] || ACC.emerald;
+      s.setProperty('--accent-h', a[0]+''); s.setProperty('--accent-s', a[1]+'%'); s.setProperty('--accent-l', a[2]+'%');
+      s.setProperty('--accent', 'hsl(' + a[0] + ' ' + a[1] + '% ' + a[2] + '%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              900: '#111827',
+              800: '#1f2937',
+              700: '#374151',
+              600: '#4b5563',
+              500: '#6b7280'
+            },
+            primary: '#FACC15'
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="../../assets/learn.css">
+
+  <!-- Manifesto do curso (IDENTICO em todas as paginas) -->
+  <script type="application/json" data-inema-manifest>
+  {
+    "course": "pha2030",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos do PHA 2030", "modules": [
+        { "id": "1-1", "title": "O momento do mercado de IA", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "Educação como porta de entrada", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Potencial Humano Aumentado", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Por que habilitar vale mais que executar", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Diagnóstico e Condução da Sala", "modules": [
+        { "id": "2-1", "title": "Os quatro perfis da sala", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Discovery antes da entrega", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Como criar o aha moment", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Estrutura de aula e workshop", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Jornada de Transformação e Oferta", "modules": [
+        { "id": "3-1", "title": "Awareness até Scale", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "O treinamento como entrada relacional", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Do workshop à consultoria aplicada", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Aplicação prática e próximo passo", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" }
+      ]}
+    ]
+  }
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .topic-explanation.hidden { display: none; }
+    .topic-explanation { display: block; }
+    html { scroll-behavior: smooth; }
+    [id] { scroll-margin-top: 5rem; }
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+    
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+  
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+
+    /* Light mode — acentos blue/primary/red das caixas do modulo */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,0.25); }
+    html:not(.dark) .text-red-400 { color: #dc2626; }
+    html:not(.dark) .bg-red-500\/10 { background-color: rgba(220,38,38,0.08); }
+    html:not(.dark) .border-red-500\/30 { border-color: rgba(220,38,38,0.25); }
+
+    /* Dark — bordas e divisorias suaves */
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+
+    /* Diagramas SVG futuristas — pulso + adaptacao ao tema claro */
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+    @keyframes wf-pulse { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+    @media (prefers-reduced-motion: no-preference) {
+      .wf-a { animation: wf-pulse 2.6s ease-in-out infinite; }
+      .wf-a:nth-child(2){animation-delay:.25s} .wf-a:nth-child(3){animation-delay:.5s}
+      .wf-a:nth-child(4){animation-delay:.75s} .wf-a:nth-child(5){animation-delay:1s}
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+  
+    <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-14">
+          <div class="flex items-center space-x-4">
+            <a href="../../index.html" class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300">
+              <span class="text-2xl">🧠</span>
+              <span class="font-bold text-lg hidden sm:inline">PHA 2030</span>
+            </a>
+            <span class="text-neutral-600">|</span>
+            <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+          </div>
+          <div class="flex items-center space-x-1 sm:space-x-2">
+            <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a><a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Diagnóstico</span></a><a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Transformação</span></a>
+            <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors text-sm ml-1" title="Minha jornada"><span aria-hidden="true">◷</span><span class="hidden lg:inline">Jornada</span><span class="inema-journey-badge hidden" data-inema-journey-badge data-count="0"></span></button>
+            <div class="relative">
+              <button type="button" data-inema-appearance-toggle="[data-inema-appearance]" aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" title="Aparencia e leitura"><span aria-hidden="true">◑</span></button>
+              <div data-inema-appearance class="inema-appearance-pop">
+                <div class="inema-segment"><button data-inema-set-theme="inema-dark">Escuro</button><button data-inema-set-theme="claro">Claro</button><button data-inema-set-theme="sepia">Sépia</button><button data-inema-set-theme="foco">Foco</button><button data-inema-set-theme="contraste">Alto contraste</button></div>
+                <div class="inema-segment"><button data-inema-set-font="inter">Inter</button><button data-inema-set-font="system">Sistema</button><button data-inema-set-font="leitura">Leitura</button></div>
+                <div class="inema-segment"><button data-inema-set-fontscale="100">A</button><button data-inema-set-fontscale="112">A+</button><button data-inema-set-fontscale="125">A++</button></div>
+                <div class="inema-segment"><button data-inema-set-linewidth="60">Estreito</button><button data-inema-set-linewidth="68">Médio</button><button data-inema-set-linewidth="75">Largo</button></div>
+                <div class="inema-segment"><button data-inema-set-leading="1.45">Compacto</button><button data-inema-set-leading="1.7">Confortável</button></div>
+                <div class="inema-accent-grid"><button data-inema-set-accent="emerald"></button><button data-inema-set-accent="blue"></button><button data-inema-set-accent="purple"></button><button data-inema-set-accent="amber"></button><button data-inema-set-accent="teal"></button><button data-inema-set-accent="rose"></button></div>
+              </div>
+            </div>
+            <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
+              <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+              </svg>
+              <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-neutral-300" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  
+  
+      <div class="border-b border-dark-600 bg-dark-900/70">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-sm text-neutral-400">
+          <a href="../../index.html" class="hover:text-neutral-300">Inicio</a>
+          <span class="mx-2">/</span>
+          <a href="index.html" class="hover:text-neutral-300">Trilha 1</a>
+          <span class="mx-2">/</span>
+          <span class="text-emerald-400">Modulo 1.4</span>
+        </div>
+      </div>
+
+      <header class="bg-gradient-to-br from-emerald-900/30 via-dark-900 to-dark-800 border-b border-dark-600">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <span class="inline-flex px-4 py-2 rounded-full text-xs font-semibold text-emerald-400 bg-emerald-500/20 border border-emerald-500/30 mb-6">MODULO 1.4</span>
+          <h1 class="text-4xl font-bold mb-4">Por que habilitar vale mais que executar</h1>
+          <p class="text-neutral-400 max-w-3xl text-lg mb-8">Comparacao entre o modelo centrado em execucao e o modelo centrado em habilitacao.</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-4">
+      <div class="text-neutral-500 text-sm">Topicos</div>
+      <div class="font-bold text-lg">6</div>
+    </div>
+  
+            
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-4">
+      <div class="text-neutral-500 text-sm">Minutos</div>
+      <div class="font-bold text-lg">~35</div>
+    </div>
+  
+            
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-4">
+      <div class="text-neutral-500 text-sm">Nivel</div>
+      <div class="font-bold text-lg">Essencial</div>
+    </div>
+  
+            
+    <div class="bg-dark-800 rounded-xl border border-dark-600 p-4">
+      <div class="text-neutral-500 text-sm">Tipo</div>
+      <div class="font-bold text-lg">Modulo</div>
+    </div>
+  
+          </div>
+        </div>
+      </header>
+
+      <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="lg:grid lg:grid-cols-[1fr_240px] lg:gap-10">
+          <div class="inema-prose">
+
+        <!-- Medidor do modulo -->
+        <div data-inema-meter="modulo:1-4" class="inema-bar-wrap mb-10 bg-dark-800 border border-dark-600 rounded-xl p-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do modulo 1.4">
+          <div class="flex items-center justify-between mb-2 text-sm">
+            <span class="text-neutral-400">Seu progresso neste módulo</span>
+            <span><span class="inema-meter-count" data-inema-meter-frac>0 de 6</span> · <span class="text-emerald-400 font-semibold" data-inema-meter-pct>0%</span></span>
+          </div>
+          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
+        </div>
+
+        <section class="mb-16 rounded-2xl border border-emerald-500/30 bg-dark-800 shadow-[inset_0_-4px_0_0_rgba(52,211,153,0.25)] p-8">
+          <h2 class="text-2xl font-bold mb-4">Enquadramento estrategico</h2>
+          <div class="space-y-4 text-neutral-300">
+            <p>O modulo 1.4 fecha a trilha 1 como um confronto de posicionamento. Ele compara duas formas de entrar no mercado: uma centrada em execucao pura e outra centrada em habilitacao. Essa comparacao nao existe para demonizar a execucao, mas para mostrar por que ela ganha mais valor quando aparece depois de uma etapa de preparo, clareza e maturidade.</p><p>Aqui o texto precisa ser mais incisivo. O aluno deve sentir que esta escolhendo que tipo de profissional quer ser visto como no mercado: fornecedor que responde pedido imediato ou referencia que ajuda a reorganizar a pergunta, a prioridade e a direcao da empresa.</p><p>E por isso que este modulo pede outra energia visual e argumentativa. Ele funciona quase como fechamento de manifesto da trilha: depois de entender contexto, tese e conceito central, o aluno agora consegue ver qual tipo de posicionamento comercial e estrategico faz mais sentido sustentar.</p>
+          </div>
+        </section>
+
+        <!-- SVG: Executar vs Habilitar (dois paineis comparativos) -->
+        <div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden max-w-4xl">
+          <svg viewBox="0 0 1000 280" class="w-full h-auto" role="img" aria-label="Comparacao entre dois modos de entrar no mercado: executar gera relacao de fornecedor que responde pedido e cria dependencia; habilitar gera relacao de referencia que reorganiza a pergunta e cria autoridade">
+            <defs>
+              <linearGradient id="m14-grad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#10b981"/>
+              </linearGradient>
+              <filter id="m14-glow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="1.8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <pattern id="m14-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                <circle cx="1.3" cy="1.3" r="1.3" fill="#10b981" opacity="0.12"/>
+              </pattern>
+              <marker id="m14-ah" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#9ca3af"/></marker>
+              <marker id="m14-ahg" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"/></marker>
+            </defs>
+            <rect x="0" y="0" width="1000" height="280" fill="url(#m14-grid)"/>
+            <!-- divisor central -->
+            <line x1="500" y1="24" x2="500" y2="256" stroke="#34d399" stroke-width="1.6" stroke-dasharray="8 8" opacity="0.4"/>
+            <!-- LADO ESQUERDO: Executar (neutro) -->
+            <text x="250" y="44" text-anchor="middle" fill="#9ca3af" font-family="Inter,sans-serif" font-weight="600" font-size="17">Executar</text>
+            <g font-family="Inter,sans-serif" font-size="13">
+              <rect x="90" y="70" width="320" height="44" rx="11" fill="#26201a" stroke="#9ca3af" stroke-width="2"/>
+              <text x="250" y="97" text-anchor="middle" fill="#e5e7eb">fornecedor que responde o pedido</text>
+              <path d="M250,114 L250,140" fill="none" stroke="#9ca3af" stroke-width="1.8" opacity="0.55" marker-end="url(#m14-ah)"/>
+              <rect x="90" y="146" width="320" height="44" rx="11" fill="#26201a" stroke="#9ca3af" stroke-width="2"/>
+              <text x="250" y="173" text-anchor="middle" fill="#e5e7eb">resolve a tarefa imediata</text>
+              <path d="M250,190 L250,216" fill="none" stroke="#9ca3af" stroke-width="1.8" opacity="0.55" marker-end="url(#m14-ah)"/>
+              <rect x="90" y="222" width="320" height="44" rx="11" fill="#26201a" stroke="#9ca3af" stroke-width="2"/>
+              <text x="250" y="249" text-anchor="middle" fill="#9ad6ff" font-weight="600">dependencia</text>
+            </g>
+            <!-- LADO DIREITO: Habilitar (foco, cor da trilha) -->
+            <text x="750" y="44" text-anchor="middle" fill="#34d399" font-family="Inter,sans-serif" font-weight="600" font-size="17">Habilitar</text>
+            <g font-family="Inter,sans-serif" font-size="13">
+              <rect x="590" y="70" width="320" height="44" rx="11" fill="#0e2018" stroke="#34d399" stroke-width="2"/>
+              <text x="750" y="97" text-anchor="middle" fill="#34d399" font-weight="600">referencia que ajuda a pensar</text>
+              <path d="M750,114 L750,140" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.55" marker-end="url(#m14-ahg)"/>
+              <rect x="590" y="146" width="320" height="44" rx="11" fill="#0e2018" stroke="#34d399" stroke-width="2"/>
+              <text x="750" y="173" text-anchor="middle" fill="#34d399" font-weight="600">reorganiza pergunta e prioridade</text>
+              <path d="M750,190 L750,216" fill="none" stroke="#34d399" stroke-width="1.8" opacity="0.55" marker-end="url(#m14-ahg)"/>
+            </g>
+            <!-- resultado-foco com glow -->
+            <g font-family="Inter,sans-serif" font-size="13" filter="url(#m14-glow)">
+              <rect x="590" y="222" width="320" height="44" rx="11" fill="#0e2018" stroke="url(#m14-grad)" stroke-width="2"/>
+              <text x="750" y="249" text-anchor="middle" fill="#34d399" font-weight="600">autoridade e continuidade</text>
+            </g>
+          </svg>
+        </div>
+
+      <section id="topico-1" data-inema-topic="modulo-1-4#topico-1" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">1</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Problema do modelo antigo</h2>
+              <p class="text-neutral-400">Execucao como dependencia. Quando o valor fica preso ao entregavel tecnico, o cliente delega, cobra e pouco aprende. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
+            <p data-inema-block="m1-4-t1-p1" class="text-neutral-300 mb-4">Quando o valor fica preso ao entregavel tecnico, o cliente delega, cobra e pouco aprende. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura de posicionamento</h3>
+            <p class="text-neutral-300 mb-4">Essa relacao tende a gerar escopo confuso e manutencao pesada. Essa diferenca nao e apenas comercial. Ela muda a qualidade do trabalho. Modelos centrados so em execucao atraem escopos mais confusos, mais manutencao e mais dependencia. Modelos centrados em habilitacao favorecem alinhamento, autonomia e recorrencia.</p>
+            <p class="text-neutral-300">O PHA 2030 usa esse contraste para mostrar que autoridade nasce menos de parecer o tecnico mais sofisticado da sala e mais de conseguir preparar a sala para pensar melhor, decidir melhor e usar melhor a tecnologia.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Comparacao aplicada</h3>
+            <p class="text-neutral-300 mb-4">Imagine uma empresa pedindo "um agente de IA". No caminho da execucao pura, voce vai direto para o entregavel e herda expectativas difusas. No caminho da habilitacao, voce primeiro ajuda a empresa a entender problema, prontidao, limite e objetivo. O projeto seguinte entra muito melhor.</p>
+            <p class="text-neutral-300">Esse tipo de cena deixa claro que habilitar nao substitui executar. Ele reorganiza o momento da execucao e faz com que ela aconteca em ambiente mais maduro, mais lucido e mais valioso.</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-dark-800 to-emerald-950/10 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como usar essa diferenca na pratica</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-emerald-400 font-semibold">1.</span> Apresente o custo oculto do modelo centrado apenas em execucao: retrabalho, dependencia e posicionamento de fornecedor.</div><div><span class="text-emerald-400 font-semibold">2.</span> Mostre o ganho estrutural do modelo de habilitacao: autoridade, melhor entrada, mais portas internas e continuidade.</div><div><span class="text-emerald-400 font-semibold">3.</span> Sempre conclua com a ideia de sequencia: educar, diagnosticar, acompanhar, consultar e so implementar quando o terreno estiver melhor preparado.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Analise de fundo</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Como leitura longa, este modulo precisa funcionar quase como um ensaio de posicionamento. Problema do modelo antigo nao e apenas sobre preferencia de formato de servico. E sobre onde o profissional quer ficar no mapa de valor do cliente: no lugar do fornecedor tatico ou no lugar da referencia que ajuda a organizar mudanca.</p><p>Quando a proposta gira em torno da execucao, o cliente tende a consumir e cobrar. Ele aprende pouco, participa pouco da maturidade e mede valor principalmente pelo entregavel. Isso pode funcionar no curto prazo, mas costuma pressionar margem, aumentar desgaste e limitar profundidade de relacao.</p><p>Ja a habilitacao muda o jogo. Ela faz com que o profissional entre ensinando, esclarecendo e criando criterio. Em vez de apenas responder ao pedido imediato, ele melhora a qualidade do proprio pedido. E isso e um ganho enorme de posicionamento, porque quem melhora a pergunta do cliente deixa de ser apenas executor e passa a ser consultado como referencia.</p><p>No final, o aluno precisa entender que problema do modelo antigo e uma decisao sobre tipo de relacao, tipo de autoridade e tipo de futuro comercial que se quer construir. Esse e o modulo que fecha a trilha 1 com uma mensagem mais estrategica.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6">
+              <h3 class="text-lg font-semibold text-emerald-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Caricaturar a execucao como se ela nunca tivesse valor.</li><li>Transformar habilitacao em discurso vago sem mostrar melhora concreta de posicionamento.</li><li>Falar de autoridade sem explicar o mecanismo real que a constrói.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ring-1 ring-dark-600 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de posicionamento</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Hoje eu entro mais como fornecedor ou como referencia?</p><p>Que parte da minha forma de vender ainda reforca o lado fraco que problema do modelo antigo critica?</p><p>O que mudaria no meu trabalho se eu priorizasse habilitacao antes de execucao?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Argumentos para fixar</h3>
+            <p class="text-neutral-300 mb-4">entregavel, dependencia, escopo, manutencao, fornecedor</p>
+            <p class="text-neutral-300">Memorize assim: Problema do modelo antigo e menos uma opiniao e mais uma escolha estrategica de posicionamento. entregavel, dependencia, escopo definem o tipo de relacao que voce constrói.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    
+      <section id="topico-2" data-inema-topic="modulo-1-4#topico-2" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">2</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Fornecedor versus referencia</h2>
+              <p class="text-neutral-400">Mudanca de posicionamento. Quem so executa tende a ser visto como fornecedor. Quem habilita ocupa espaco de orientacao. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
+            <p data-inema-block="m1-4-t2-p1" class="text-neutral-300 mb-4">Quem so executa tende a ser visto como fornecedor. Quem habilita ocupa espaco de orientacao. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura de posicionamento</h3>
+            <p class="text-neutral-300 mb-4">Esse salto de posicionamento aumenta autoridade e profundidade de relacao. Essa diferenca nao e apenas comercial. Ela muda a qualidade do trabalho. Modelos centrados so em execucao atraem escopos mais confusos, mais manutencao e mais dependencia. Modelos centrados em habilitacao favorecem alinhamento, autonomia e recorrencia.</p>
+            <p class="text-neutral-300">O PHA 2030 usa esse contraste para mostrar que autoridade nasce menos de parecer o tecnico mais sofisticado da sala e mais de conseguir preparar a sala para pensar melhor, decidir melhor e usar melhor a tecnologia.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Comparacao aplicada</h3>
+            <p class="text-neutral-300 mb-4">Imagine uma empresa pedindo "um agente de IA". No caminho da execucao pura, voce vai direto para o entregavel e herda expectativas difusas. No caminho da habilitacao, voce primeiro ajuda a empresa a entender problema, prontidao, limite e objetivo. O projeto seguinte entra muito melhor.</p>
+            <p class="text-neutral-300">Esse tipo de cena deixa claro que habilitar nao substitui executar. Ele reorganiza o momento da execucao e faz com que ela aconteca em ambiente mais maduro, mais lucido e mais valioso.</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-dark-800 to-emerald-950/10 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como usar essa diferenca na pratica</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-emerald-400 font-semibold">1.</span> Apresente o custo oculto do modelo centrado apenas em execucao: retrabalho, dependencia e posicionamento de fornecedor.</div><div><span class="text-emerald-400 font-semibold">2.</span> Mostre o ganho estrutural do modelo de habilitacao: autoridade, melhor entrada, mais portas internas e continuidade.</div><div><span class="text-emerald-400 font-semibold">3.</span> Sempre conclua com a ideia de sequencia: educar, diagnosticar, acompanhar, consultar e so implementar quando o terreno estiver melhor preparado.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Analise de fundo</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Como leitura longa, este modulo precisa funcionar quase como um ensaio de posicionamento. Fornecedor versus referencia nao e apenas sobre preferencia de formato de servico. E sobre onde o profissional quer ficar no mapa de valor do cliente: no lugar do fornecedor tatico ou no lugar da referencia que ajuda a organizar mudanca.</p><p>Quando a proposta gira em torno da execucao, o cliente tende a consumir e cobrar. Ele aprende pouco, participa pouco da maturidade e mede valor principalmente pelo entregavel. Isso pode funcionar no curto prazo, mas costuma pressionar margem, aumentar desgaste e limitar profundidade de relacao.</p><p>Ja a habilitacao muda o jogo. Ela faz com que o profissional entre ensinando, esclarecendo e criando criterio. Em vez de apenas responder ao pedido imediato, ele melhora a qualidade do proprio pedido. E isso e um ganho enorme de posicionamento, porque quem melhora a pergunta do cliente deixa de ser apenas executor e passa a ser consultado como referencia.</p><p>No final, o aluno precisa entender que fornecedor versus referencia e uma decisao sobre tipo de relacao, tipo de autoridade e tipo de futuro comercial que se quer construir. Esse e o modulo que fecha a trilha 1 com uma mensagem mais estrategica.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6">
+              <h3 class="text-lg font-semibold text-emerald-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Caricaturar a execucao como se ela nunca tivesse valor.</li><li>Transformar habilitacao em discurso vago sem mostrar melhora concreta de posicionamento.</li><li>Falar de autoridade sem explicar o mecanismo real que a constrói.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ring-1 ring-dark-600 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de posicionamento</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Hoje eu entro mais como fornecedor ou como referencia?</p><p>Que parte da minha forma de vender ainda reforca o lado fraco que fornecedor versus referencia critica?</p><p>O que mudaria no meu trabalho se eu priorizasse habilitacao antes de execucao?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Argumentos para fixar</h3>
+            <p class="text-neutral-300 mb-4">fornecedor, referencia, autoridade, orientacao, relacao</p>
+            <p class="text-neutral-300">Memorize assim: Fornecedor versus referencia e menos uma opiniao e mais uma escolha estrategica de posicionamento. fornecedor, referencia, autoridade definem o tipo de relacao que voce constrói.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    
+      <section id="topico-3" data-inema-topic="modulo-1-4#topico-3" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">3</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Escala com menos desgaste</h2>
+              <p class="text-neutral-400">Modelo mais leve e recorrente. Habilitacao e acompanhamento escalam melhor do que projetos isolados com retrabalho alto. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
+            <p data-inema-block="m1-4-t3-p1" class="text-neutral-300 mb-4">Habilitacao e acompanhamento escalam melhor do que projetos isolados com retrabalho alto. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura de posicionamento</h3>
+            <p class="text-neutral-300 mb-4">Isso melhora sustentabilidade comercial e margem de operacao. Essa diferenca nao e apenas comercial. Ela muda a qualidade do trabalho. Modelos centrados so em execucao atraem escopos mais confusos, mais manutencao e mais dependencia. Modelos centrados em habilitacao favorecem alinhamento, autonomia e recorrencia.</p>
+            <p class="text-neutral-300">O PHA 2030 usa esse contraste para mostrar que autoridade nasce menos de parecer o tecnico mais sofisticado da sala e mais de conseguir preparar a sala para pensar melhor, decidir melhor e usar melhor a tecnologia.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Comparacao aplicada</h3>
+            <p class="text-neutral-300 mb-4">Imagine uma empresa pedindo "um agente de IA". No caminho da execucao pura, voce vai direto para o entregavel e herda expectativas difusas. No caminho da habilitacao, voce primeiro ajuda a empresa a entender problema, prontidao, limite e objetivo. O projeto seguinte entra muito melhor.</p>
+            <p class="text-neutral-300">Esse tipo de cena deixa claro que habilitar nao substitui executar. Ele reorganiza o momento da execucao e faz com que ela aconteca em ambiente mais maduro, mais lucido e mais valioso.</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-dark-800 to-emerald-950/10 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como usar essa diferenca na pratica</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-emerald-400 font-semibold">1.</span> Apresente o custo oculto do modelo centrado apenas em execucao: retrabalho, dependencia e posicionamento de fornecedor.</div><div><span class="text-emerald-400 font-semibold">2.</span> Mostre o ganho estrutural do modelo de habilitacao: autoridade, melhor entrada, mais portas internas e continuidade.</div><div><span class="text-emerald-400 font-semibold">3.</span> Sempre conclua com a ideia de sequencia: educar, diagnosticar, acompanhar, consultar e so implementar quando o terreno estiver melhor preparado.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Analise de fundo</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Como leitura longa, este modulo precisa funcionar quase como um ensaio de posicionamento. Escala com menos desgaste nao e apenas sobre preferencia de formato de servico. E sobre onde o profissional quer ficar no mapa de valor do cliente: no lugar do fornecedor tatico ou no lugar da referencia que ajuda a organizar mudanca.</p><p>Quando a proposta gira em torno da execucao, o cliente tende a consumir e cobrar. Ele aprende pouco, participa pouco da maturidade e mede valor principalmente pelo entregavel. Isso pode funcionar no curto prazo, mas costuma pressionar margem, aumentar desgaste e limitar profundidade de relacao.</p><p>Ja a habilitacao muda o jogo. Ela faz com que o profissional entre ensinando, esclarecendo e criando criterio. Em vez de apenas responder ao pedido imediato, ele melhora a qualidade do proprio pedido. E isso e um ganho enorme de posicionamento, porque quem melhora a pergunta do cliente deixa de ser apenas executor e passa a ser consultado como referencia.</p><p>No final, o aluno precisa entender que escala com menos desgaste e uma decisao sobre tipo de relacao, tipo de autoridade e tipo de futuro comercial que se quer construir. Esse e o modulo que fecha a trilha 1 com uma mensagem mais estrategica.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6">
+              <h3 class="text-lg font-semibold text-emerald-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Caricaturar a execucao como se ela nunca tivesse valor.</li><li>Transformar habilitacao em discurso vago sem mostrar melhora concreta de posicionamento.</li><li>Falar de autoridade sem explicar o mecanismo real que a constrói.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ring-1 ring-dark-600 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de posicionamento</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Hoje eu entro mais como fornecedor ou como referencia?</p><p>Que parte da minha forma de vender ainda reforca o lado fraco que escala com menos desgaste critica?</p><p>O que mudaria no meu trabalho se eu priorizasse habilitacao antes de execucao?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Argumentos para fixar</h3>
+            <p class="text-neutral-300 mb-4">escala, recorrencia, desgaste, sustentabilidade, margem</p>
+            <p class="text-neutral-300">Memorize assim: Escala com menos desgaste e menos uma opiniao e mais uma escolha estrategica de posicionamento. escala, recorrencia, desgaste definem o tipo de relacao que voce constrói.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    
+      <section id="topico-4" data-inema-topic="modulo-1-4#topico-4" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">4</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Educar antes de executar</h2>
+              <p class="text-neutral-400">Preparacao melhora a implementacao. Clientes mais preparados definem melhor prioridades, expectativas e limites. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
+            <p data-inema-block="m1-4-t4-p1" class="text-neutral-300 mb-4">Clientes mais preparados definem melhor prioridades, expectativas e limites. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura de posicionamento</h3>
+            <p class="text-neutral-300 mb-4">Isso aumenta a qualidade de qualquer consultoria ou implementacao posterior. Essa diferenca nao e apenas comercial. Ela muda a qualidade do trabalho. Modelos centrados so em execucao atraem escopos mais confusos, mais manutencao e mais dependencia. Modelos centrados em habilitacao favorecem alinhamento, autonomia e recorrencia.</p>
+            <p class="text-neutral-300">O PHA 2030 usa esse contraste para mostrar que autoridade nasce menos de parecer o tecnico mais sofisticado da sala e mais de conseguir preparar a sala para pensar melhor, decidir melhor e usar melhor a tecnologia.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Comparacao aplicada</h3>
+            <p class="text-neutral-300 mb-4">Imagine uma empresa pedindo "um agente de IA". No caminho da execucao pura, voce vai direto para o entregavel e herda expectativas difusas. No caminho da habilitacao, voce primeiro ajuda a empresa a entender problema, prontidao, limite e objetivo. O projeto seguinte entra muito melhor.</p>
+            <p class="text-neutral-300">Esse tipo de cena deixa claro que habilitar nao substitui executar. Ele reorganiza o momento da execucao e faz com que ela aconteca em ambiente mais maduro, mais lucido e mais valioso.</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-dark-800 to-emerald-950/10 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como usar essa diferenca na pratica</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-emerald-400 font-semibold">1.</span> Apresente o custo oculto do modelo centrado apenas em execucao: retrabalho, dependencia e posicionamento de fornecedor.</div><div><span class="text-emerald-400 font-semibold">2.</span> Mostre o ganho estrutural do modelo de habilitacao: autoridade, melhor entrada, mais portas internas e continuidade.</div><div><span class="text-emerald-400 font-semibold">3.</span> Sempre conclua com a ideia de sequencia: educar, diagnosticar, acompanhar, consultar e so implementar quando o terreno estiver melhor preparado.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Analise de fundo</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Como leitura longa, este modulo precisa funcionar quase como um ensaio de posicionamento. Educar antes de executar nao e apenas sobre preferencia de formato de servico. E sobre onde o profissional quer ficar no mapa de valor do cliente: no lugar do fornecedor tatico ou no lugar da referencia que ajuda a organizar mudanca.</p><p>Quando a proposta gira em torno da execucao, o cliente tende a consumir e cobrar. Ele aprende pouco, participa pouco da maturidade e mede valor principalmente pelo entregavel. Isso pode funcionar no curto prazo, mas costuma pressionar margem, aumentar desgaste e limitar profundidade de relacao.</p><p>Ja a habilitacao muda o jogo. Ela faz com que o profissional entre ensinando, esclarecendo e criando criterio. Em vez de apenas responder ao pedido imediato, ele melhora a qualidade do proprio pedido. E isso e um ganho enorme de posicionamento, porque quem melhora a pergunta do cliente deixa de ser apenas executor e passa a ser consultado como referencia.</p><p>No final, o aluno precisa entender que educar antes de executar e uma decisao sobre tipo de relacao, tipo de autoridade e tipo de futuro comercial que se quer construir. Esse e o modulo que fecha a trilha 1 com uma mensagem mais estrategica.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6">
+              <h3 class="text-lg font-semibold text-emerald-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Caricaturar a execucao como se ela nunca tivesse valor.</li><li>Transformar habilitacao em discurso vago sem mostrar melhora concreta de posicionamento.</li><li>Falar de autoridade sem explicar o mecanismo real que a constrói.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ring-1 ring-dark-600 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de posicionamento</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Hoje eu entro mais como fornecedor ou como referencia?</p><p>Que parte da minha forma de vender ainda reforca o lado fraco que educar antes de executar critica?</p><p>O que mudaria no meu trabalho se eu priorizasse habilitacao antes de execucao?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Argumentos para fixar</h3>
+            <p class="text-neutral-300 mb-4">preparacao, prioridades, expectativas, limites, qualidade</p>
+            <p class="text-neutral-300">Memorize assim: Educar antes de executar e menos uma opiniao e mais uma escolha estrategica de posicionamento. preparacao, prioridades, expectativas definem o tipo de relacao que voce constrói.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    
+      <section id="topico-5" data-inema-topic="modulo-1-4#topico-5" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">5</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Abertura de portas internas</h2>
+              <p class="text-neutral-400">Mais areas, mais conversas. Treinamentos bem conduzidos ampliam visibilidade e permitem acessar outras liderancas e equipes. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
+            <p data-inema-block="m1-4-t5-p1" class="text-neutral-300 mb-4">Treinamentos bem conduzidos ampliam visibilidade e permitem acessar outras liderancas e equipes. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura de posicionamento</h3>
+            <p class="text-neutral-300 mb-4">Isso favorece expansao natural da conta ou da relacao. Essa diferenca nao e apenas comercial. Ela muda a qualidade do trabalho. Modelos centrados so em execucao atraem escopos mais confusos, mais manutencao e mais dependencia. Modelos centrados em habilitacao favorecem alinhamento, autonomia e recorrencia.</p>
+            <p class="text-neutral-300">O PHA 2030 usa esse contraste para mostrar que autoridade nasce menos de parecer o tecnico mais sofisticado da sala e mais de conseguir preparar a sala para pensar melhor, decidir melhor e usar melhor a tecnologia.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Comparacao aplicada</h3>
+            <p class="text-neutral-300 mb-4">Imagine uma empresa pedindo "um agente de IA". No caminho da execucao pura, voce vai direto para o entregavel e herda expectativas difusas. No caminho da habilitacao, voce primeiro ajuda a empresa a entender problema, prontidao, limite e objetivo. O projeto seguinte entra muito melhor.</p>
+            <p class="text-neutral-300">Esse tipo de cena deixa claro que habilitar nao substitui executar. Ele reorganiza o momento da execucao e faz com que ela aconteca em ambiente mais maduro, mais lucido e mais valioso.</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-dark-800 to-emerald-950/10 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como usar essa diferenca na pratica</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-emerald-400 font-semibold">1.</span> Apresente o custo oculto do modelo centrado apenas em execucao: retrabalho, dependencia e posicionamento de fornecedor.</div><div><span class="text-emerald-400 font-semibold">2.</span> Mostre o ganho estrutural do modelo de habilitacao: autoridade, melhor entrada, mais portas internas e continuidade.</div><div><span class="text-emerald-400 font-semibold">3.</span> Sempre conclua com a ideia de sequencia: educar, diagnosticar, acompanhar, consultar e so implementar quando o terreno estiver melhor preparado.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Analise de fundo</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Como leitura longa, este modulo precisa funcionar quase como um ensaio de posicionamento. Abertura de portas internas nao e apenas sobre preferencia de formato de servico. E sobre onde o profissional quer ficar no mapa de valor do cliente: no lugar do fornecedor tatico ou no lugar da referencia que ajuda a organizar mudanca.</p><p>Quando a proposta gira em torno da execucao, o cliente tende a consumir e cobrar. Ele aprende pouco, participa pouco da maturidade e mede valor principalmente pelo entregavel. Isso pode funcionar no curto prazo, mas costuma pressionar margem, aumentar desgaste e limitar profundidade de relacao.</p><p>Ja a habilitacao muda o jogo. Ela faz com que o profissional entre ensinando, esclarecendo e criando criterio. Em vez de apenas responder ao pedido imediato, ele melhora a qualidade do proprio pedido. E isso e um ganho enorme de posicionamento, porque quem melhora a pergunta do cliente deixa de ser apenas executor e passa a ser consultado como referencia.</p><p>No final, o aluno precisa entender que abertura de portas internas e uma decisao sobre tipo de relacao, tipo de autoridade e tipo de futuro comercial que se quer construir. Esse e o modulo que fecha a trilha 1 com uma mensagem mais estrategica.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6">
+              <h3 class="text-lg font-semibold text-emerald-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Caricaturar a execucao como se ela nunca tivesse valor.</li><li>Transformar habilitacao em discurso vago sem mostrar melhora concreta de posicionamento.</li><li>Falar de autoridade sem explicar o mecanismo real que a constrói.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ring-1 ring-dark-600 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de posicionamento</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Hoje eu entro mais como fornecedor ou como referencia?</p><p>Que parte da minha forma de vender ainda reforca o lado fraco que abertura de portas internas critica?</p><p>O que mudaria no meu trabalho se eu priorizasse habilitacao antes de execucao?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Argumentos para fixar</h3>
+            <p class="text-neutral-300 mb-4">visibilidade, liderancas, equipes, expansao, conta</p>
+            <p class="text-neutral-300">Memorize assim: Abertura de portas internas e menos uma opiniao e mais uma escolha estrategica de posicionamento. visibilidade, liderancas, equipes definem o tipo de relacao que voce constrói.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    
+      <section id="topico-6" data-inema-topic="modulo-1-4#topico-6" class="mb-16">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-start gap-4">
+            <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">6</span>
+            <div>
+              <h2 class="text-2xl font-bold mb-2">Tese comercial final</h2>
+              <p class="text-neutral-400">Habilitacao como ativo estrategico. A proposta do PHA 2030 transforma a aula em mecanismo de entrada, diagnostico e continuidade. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
+            </div>
+          </div>
+          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
+            <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
+            <p data-inema-block="m1-4-t6-p1" class="text-neutral-300 mb-4">A proposta do PHA 2030 transforma a aula em mecanismo de entrada, diagnostico e continuidade. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+            <h3 class="text-lg font-semibold text-blue-400 mb-2">Leitura de posicionamento</h3>
+            <p class="text-neutral-300 mb-4">Essa e a base do modelo comercial do curso. Essa diferenca nao e apenas comercial. Ela muda a qualidade do trabalho. Modelos centrados so em execucao atraem escopos mais confusos, mais manutencao e mais dependencia. Modelos centrados em habilitacao favorecem alinhamento, autonomia e recorrencia.</p>
+            <p class="text-neutral-300">O PHA 2030 usa esse contraste para mostrar que autoridade nasce menos de parecer o tecnico mais sofisticado da sala e mais de conseguir preparar a sala para pensar melhor, decidir melhor e usar melhor a tecnologia.</p>
+          </div>
+
+          <div class=" rounded-2xl border border-primary/40 bg-primary/10 p-6">
+            <h3 class="text-lg font-semibold text-primary mb-2">Comparacao aplicada</h3>
+            <p class="text-neutral-300 mb-4">Imagine uma empresa pedindo "um agente de IA". No caminho da execucao pura, voce vai direto para o entregavel e herda expectativas difusas. No caminho da habilitacao, voce primeiro ajuda a empresa a entender problema, prontidao, limite e objetivo. O projeto seguinte entra muito melhor.</p>
+            <p class="text-neutral-300">Esse tipo de cena deixa claro que habilitar nao substitui executar. Ele reorganiza o momento da execucao e faz com que ela aconteca em ambiente mais maduro, mais lucido e mais valioso.</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-dark-800 to-emerald-950/10 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Como usar essa diferenca na pratica</h3>
+            <div class="space-y-4 text-neutral-300">
+              <div><span class="text-emerald-400 font-semibold">1.</span> Apresente o custo oculto do modelo centrado apenas em execucao: retrabalho, dependencia e posicionamento de fornecedor.</div><div><span class="text-emerald-400 font-semibold">2.</span> Mostre o ganho estrutural do modelo de habilitacao: autoridade, melhor entrada, mais portas internas e continuidade.</div><div><span class="text-emerald-400 font-semibold">3.</span> Sempre conclua com a ideia de sequencia: educar, diagnosticar, acompanhar, consultar e so implementar quando o terreno estiver melhor preparado.</div>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Analise de fundo</h3>
+            <div class="space-y-4 text-neutral-300">
+              <p>Como leitura longa, este modulo precisa funcionar quase como um ensaio de posicionamento. Tese comercial final nao e apenas sobre preferencia de formato de servico. E sobre onde o profissional quer ficar no mapa de valor do cliente: no lugar do fornecedor tatico ou no lugar da referencia que ajuda a organizar mudanca.</p><p>Quando a proposta gira em torno da execucao, o cliente tende a consumir e cobrar. Ele aprende pouco, participa pouco da maturidade e mede valor principalmente pelo entregavel. Isso pode funcionar no curto prazo, mas costuma pressionar margem, aumentar desgaste e limitar profundidade de relacao.</p><p>Ja a habilitacao muda o jogo. Ela faz com que o profissional entre ensinando, esclarecendo e criando criterio. Em vez de apenas responder ao pedido imediato, ele melhora a qualidade do proprio pedido. E isso e um ganho enorme de posicionamento, porque quem melhora a pergunta do cliente deixa de ser apenas executor e passa a ser consultado como referencia.</p><p>No final, o aluno precisa entender que tese comercial final e uma decisao sobre tipo de relacao, tipo de autoridade e tipo de futuro comercial que se quer construir. Esse e o modulo que fecha a trilha 1 com uma mensagem mais estrategica.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6">
+              <h3 class="text-lg font-semibold text-emerald-400 mb-3">Fazer</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Conectar o tema a dores reconheciveis.</li>
+                <li>Usar linguagem clara e operacional.</li>
+                <li>Transformar o conceito em proximo passo.</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-red-500/30 bg-red-500/10 p-6">
+              <h3 class="text-lg font-semibold text-red-400 mb-3">Evitar</h3>
+              <ul class="space-y-2 text-neutral-300">
+                <li>Caricaturar a execucao como se ela nunca tivesse valor.</li><li>Transformar habilitacao em discurso vago sem mostrar melhora concreta de posicionamento.</li><li>Falar de autoridade sem explicar o mecanismo real que a constrói.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ring-1 ring-dark-600 rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Perguntas de posicionamento</h3>
+            <div class="space-y-3 text-neutral-300">
+              <p>Hoje eu entro mais como fornecedor ou como referencia?</p><p>Que parte da minha forma de vender ainda reforca o lado fraco que tese comercial final critica?</p><p>O que mudaria no meu trabalho se eu priorizasse habilitacao antes de execucao?</p>
+            </div>
+          </div>
+
+          <div class=" rounded-2xl border border-dark-600 bg-dark-800 p-6">
+            <h3 class="text-lg font-semibold mb-3">Argumentos para fixar</h3>
+            <p class="text-neutral-300 mb-4">ativo, estrategico, entrada, diagnostico, continuidade</p>
+            <p class="text-neutral-300">Memorize assim: Tese comercial final e menos uma opiniao e mais uma escolha estrategica de posicionamento. ativo, estrategico, entrada definem o tipo de relacao que voce constrói.</p>
+          </div>
+
+          <div class="flex justify-start mt-2">
+            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
+              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    
+
+        <section class="rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-8">
+          <h2 class="text-2xl font-bold mb-4">Conclusao do confronto</h2>
+          <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div class="bg-dark-800 rounded-xl p-4 text-neutral-300">✓ Problema do modelo antigo</div><div class="bg-dark-800 rounded-xl p-4 text-neutral-300">✓ Fornecedor versus referencia</div><div class="bg-dark-800 rounded-xl p-4 text-neutral-300">✓ Escala com menos desgaste</div><div class="bg-dark-800 rounded-xl p-4 text-neutral-300">✓ Educar antes de executar</div>
+          </div>
+          <p class="text-neutral-300 mb-6">O objetivo deste modulo e transformar repertorio em capacidade aplicada. Use os topicos como roteiro de conversa, aula, workshop ou proposta comercial.</p>
+          <div class="flex justify-start space-x-3">
+            <a href="index.html" class="px-4 py-2 text-sm bg-dark-700 hover:bg-dark-600 rounded-lg transition-colors">Voltar para Trilha</a>
+            <a href="../../index.html" class="px-4 py-2 text-sm bg-primary text-dark-900 rounded-lg transition-colors">Voltar ao curso</a>
+          </div>
+        </section>
+
+          </div>
+
+          <!-- TOC -->
+          <aside>
+            <nav data-inema-toc aria-label="Índice da página" class="hidden lg:block sticky top-24 self-start">
+              <p class="text-sm text-neutral-400 mb-3">Seção <span data-inema-section-counter>1 de 6</span></p>
+              <ol class="space-y-1 text-sm">
+                <li><a href="#topico-1" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">1. Problema do modelo antigo</a></li>
+                <li><a href="#topico-2" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">2. Fornecedor versus referência</a></li>
+                <li><a href="#topico-3" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">3. Escala com menos desgaste</a></li>
+                <li><a href="#topico-4" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">4. Educar antes de executar</a></li>
+                <li><a href="#topico-5" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">5. Abertura de portas internas</a></li>
+                <li><a href="#topico-6" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">6. Tese comercial final</a></li>
+              </ol>
+            </nav>
+          </aside>
+        </div>
+      </main>
+    
+  <footer class="border-t border-dark-600 py-8 mt-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-sm text-neutral-500">
+      PHA 2030 | Preparar humanos para operar o futuro.
+    </div>
+  </footer>
+  <script>
+    function toggleTopic(button) {
+      const current = button.parentElement;
+      const container = current.parentElement;
+      const explanation = current.querySelector('.topic-explanation');
+      const items = container.querySelectorAll('.topic-item .topic-explanation');
+      items.forEach((item) => {
+        if (item !== explanation) item.classList.add('hidden');
+      });
+      explanation.classList.toggle('hidden');
+    }
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('[id^="modal-"]').forEach((modal) => modal.classList.add('hidden'));
+        document.body.style.overflow = '';
+      }
+    });
+
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const isDark = () => document.documentElement.classList.contains('dark');
+    const syncIcons = () => {
+      themeToggleDarkIcon.classList.toggle('hidden', !isDark());
+      themeToggleLightIcon.classList.toggle('hidden', isDark());
+    };
+    syncIcons();
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      document.documentElement.style.colorScheme = isDark() ? 'dark' : 'light';
+      localStorage.setItem('theme', isDark() ? 'dark' : 'light');
+      try { if (window.INEMA && INEMA.setPref) INEMA.setPref('theme', isDark() ? 'inema-dark' : 'claro'); } catch (e) {}
+      syncIcons();
+    });
+  </script>
+
+  <!-- CAMADA DE APRENDIZAGEM -->
+  <script src="../../assets/learn.js"></script>
+  <script>if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }</script>
+</body>
+</html>
