@@ -1,10 +1,10 @@
 # PHA 2030
 
-## Da capacitação à transformação: como preparar pessoas e empresas para a era da IA
+## Da capacitaçêo à transformaçêo: como preparar pessoas e empresas para a era da IA
 
 ## Objetivo da aula
 
-Mostrar que IA não deve ser vendida apenas como ferramenta, automação ou treinamento, mas como um caminho de transformacao cultural, habilitacao pratica e evolucao organizacional, onde a educacao e a porta de entrada para auditoria, consultoria e escala.
+Mostrar que IA nêo deve ser vendida apenas como ferramenta, automaçêo ou treinamento, mas como um caminho de transformacao cultural, habilitacao pratica e evolucao organizacional, onde a educacao e a porta de entrada para auditoria, consultoria e escala.
 
 ## Resultado esperado
 

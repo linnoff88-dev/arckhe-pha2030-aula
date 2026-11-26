@@ -1,6 +1,6 @@
 # PHA 2030
 
-Materiais-base do curso, palestra e workshop "Da capacitação à transformação: como preparar pessoas e empresas para a era da IA".
+Materiais-base do curso, palestra e workshop "Da capacitaçêo à transformaçêo: como preparar pessoas e empresas para a era da IA".
 
 ## Estrutura
 

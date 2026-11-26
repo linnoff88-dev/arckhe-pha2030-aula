@@ -142,7 +142,7 @@ Melhor caminho:
 
 - validar preocupacoes legitimas
 - mostrar casos concretos
-- reduzir abstração
+- reduzir abstraçêo
 - demonstrar utilidade pratica
 
 ### 6.2 Champions
