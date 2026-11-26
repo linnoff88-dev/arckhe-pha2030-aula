@@ -258,7 +258,7 @@ function renderLanding() {
             ${statCard('Trilhas', String(course.trails.length))}
             ${statCard('Modulos', String(allModules.length))}
             ${statCard('Topicos', String(totalTopics))}
-            ${statCard('Formato', 'INEMA.CLUB')}
+            ${statCard('Formato', 'ARCKHÉ AI')}
           </div>
         </div>
       </header>
@@ -1246,7 +1246,7 @@ function nav(depth, activeTrailId) {
               <span class="font-bold text-lg hidden sm:inline">${course.title}</span>
             </a>
             <span class="text-neutral-600">|</span>
-            <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+            <a href="https://ARCKHÉ AI" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">ARCKHÉ AI</a>
           </div>
           <div class="flex items-center space-x-1 sm:space-x-2">
             ${links}

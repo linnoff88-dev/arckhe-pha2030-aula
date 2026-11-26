@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="inema-course" content="pha2030">
+  <meta name="ARCKHÉ-course" content="pha2030">
   <title>Modulo 1.4 | PHA 2030</title>
 
   <!-- ANTI-FOUC: bloqueante, ANTES do Tailwind -->
@@ -11,23 +11,23 @@
   (function () {
     try {
       var html = document.documentElement;
-      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      var DEF = { theme: 'ARCKHÉ-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
       function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
       var p = clone(DEF);
       try {
-        var raw = localStorage.getItem('inema.prefs');
+        var raw = localStorage.getItem('ARCKHÉ.prefs');
         if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed === 'object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
-        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='ARCKHÉ-dark'; }
       } catch(e){ p = clone(DEF); }
-      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'} };
-      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      var THEMES = { 'ARCKHÉ-dark':{dark:true,attr:null,cs:'dark'},'claro':{dark:false,attr:null,cs:'light'},'sepia':{dark:false,attr:'sepia',cs:'light'},'foco':{dark:null,attr:'foco',cs:null},'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['ARCKHÉ-dark'];
       if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
       if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
       html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark') ? 'dark' : 'light'));
       html.setAttribute('data-font', p.font || 'inter');
       html.setAttribute('data-accent', p.accent || 'emerald');
       var s = html.style, scale = (+p.fontScale||100);
-      s.setProperty('--inema-font-scale', (scale/100).toString());
+      s.setProperty('--ARCKHÉ-font-scale', (scale/100).toString());
       s.setProperty('font-size', scale + '%');
       s.setProperty('--measure', (+p.lineWidth||68) + 'ch');
       s.setProperty('--lh-body', (+p.leading||1.7).toString());
@@ -67,7 +67,7 @@
   <link rel="stylesheet" href="../../assets/learn.css">
 
   <!-- Manifesto do curso (IDENTICO em todas as paginas) -->
-  <script type="application/json" data-inema-manifest>
+  <script type="application/json" data-ARCKHÉ-manifest>
   {
     "course": "pha2030",
     "tracks": [
@@ -159,20 +159,20 @@
               <span class="font-bold text-lg hidden sm:inline">PHA 2030</span>
             </a>
             <span class="text-neutral-600">|</span>
-            <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">INEMA.CLUB</a>
+            <a href="https://ARCKHÉ AI" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium">ARCKHÉ AI</a>
           </div>
           <div class="flex items-center space-x-1 sm:space-x-2">
             <a href="../trilha1/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a><a href="../trilha2/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Diagnóstico</span></a><a href="../trilha3/index.html" class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Transformaçêo</span></a>
-            <button type="button" data-inema-journey-open class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors text-sm ml-1" title="Minha jornada"><span aria-hidden="true">◷</span><span class="hidden lg:inline">Jornada</span><span class="inema-journey-badge hidden" data-inema-journey-badge data-count="0"></span></button>
+            <button type="button" data-ARCKHÉ-journey-open class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-neutral-300 hover:text-neutral-100 transition-colors text-sm ml-1" title="Minha jornada"><span aria-hidden="true">◷</span><span class="hidden lg:inline">Jornada</span><span class="ARCKHÉ-journey-badge hidden" data-ARCKHÉ-journey-badge data-count="0"></span></button>
             <div class="relative">
-              <button type="button" data-inema-appearance-toggle="[data-inema-appearance]" aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" title="Aparencia e leitura"><span aria-hidden="true">◑</span></button>
-              <div data-inema-appearance class="inema-appearance-pop">
-                <div class="inema-segment"><button data-inema-set-theme="inema-dark">Escuro</button><button data-inema-set-theme="claro">Claro</button><button data-inema-set-theme="sepia">Sépia</button><button data-inema-set-theme="foco">Foco</button><button data-inema-set-theme="contraste">Alto contraste</button></div>
-                <div class="inema-segment"><button data-inema-set-font="inter">Inter</button><button data-inema-set-font="system">Sistema</button><button data-inema-set-font="leitura">Leitura</button></div>
-                <div class="inema-segment"><button data-inema-set-fontscale="100">A</button><button data-inema-set-fontscale="112">A+</button><button data-inema-set-fontscale="125">A++</button></div>
-                <div class="inema-segment"><button data-inema-set-linewidth="60">Estreito</button><button data-inema-set-linewidth="68">Médio</button><button data-inema-set-linewidth="75">Largo</button></div>
-                <div class="inema-segment"><button data-inema-set-leading="1.45">Compacto</button><button data-inema-set-leading="1.7">Confortável</button></div>
-                <div class="inema-accent-grid"><button data-inema-set-accent="emerald"></button><button data-inema-set-accent="blue"></button><button data-inema-set-accent="purple"></button><button data-inema-set-accent="amber"></button><button data-inema-set-accent="teal"></button><button data-inema-set-accent="rose"></button></div>
+              <button type="button" data-ARCKHÉ-appearance-toggle="[data-ARCKHÉ-appearance]" aria-expanded="false" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-1" title="Aparencia e leitura"><span aria-hidden="true">◑</span></button>
+              <div data-ARCKHÉ-appearance class="ARCKHÉ-appearance-pop">
+                <div class="ARCKHÉ-segment"><button data-ARCKHÉ-set-theme="ARCKHÉ-dark">Escuro</button><button data-ARCKHÉ-set-theme="claro">Claro</button><button data-ARCKHÉ-set-theme="sepia">Sépia</button><button data-ARCKHÉ-set-theme="foco">Foco</button><button data-ARCKHÉ-set-theme="contraste">Alto contraste</button></div>
+                <div class="ARCKHÉ-segment"><button data-ARCKHÉ-set-font="inter">Inter</button><button data-ARCKHÉ-set-font="system">Sistema</button><button data-ARCKHÉ-set-font="leitura">Leitura</button></div>
+                <div class="ARCKHÉ-segment"><button data-ARCKHÉ-set-fontscale="100">A</button><button data-ARCKHÉ-set-fontscale="112">A+</button><button data-ARCKHÉ-set-fontscale="125">A++</button></div>
+                <div class="ARCKHÉ-segment"><button data-ARCKHÉ-set-linewidth="60">Estreito</button><button data-ARCKHÉ-set-linewidth="68">Médio</button><button data-ARCKHÉ-set-linewidth="75">Largo</button></div>
+                <div class="ARCKHÉ-segment"><button data-ARCKHÉ-set-leading="1.45">Compacto</button><button data-ARCKHÉ-set-leading="1.7">Confortável</button></div>
+                <div class="ARCKHÉ-accent-grid"><button data-ARCKHÉ-set-accent="emerald"></button><button data-ARCKHÉ-set-accent="blue"></button><button data-ARCKHÉ-set-accent="purple"></button><button data-ARCKHÉ-set-accent="amber"></button><button data-ARCKHÉ-set-accent="teal"></button><button data-ARCKHÉ-set-accent="rose"></button></div>
               </div>
             </div>
             <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2">
@@ -235,15 +235,15 @@
 
       <main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="lg:grid lg:grid-cols-[1fr_240px] lg:gap-10">
-          <div class="inema-prose">
+          <div class="ARCKHÉ-prose">
 
         <!-- Medidor do modulo -->
-        <div data-inema-meter="modulo:1-4" class="inema-bar-wrap mb-10 bg-dark-800 border border-dark-600 rounded-xl p-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do modulo 1.4">
+        <div data-ARCKHÉ-meter="modulo:1-4" class="ARCKHÉ-bar-wrap mb-10 bg-dark-800 border border-dark-600 rounded-xl p-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do modulo 1.4">
           <div class="flex items-center justify-between mb-2 text-sm">
             <span class="text-neutral-400">Seu progresso neste módulo</span>
-            <span><span class="inema-meter-count" data-inema-meter-frac>0 de 6</span> · <span class="text-emerald-400 font-semibold" data-inema-meter-pct>0%</span></span>
+            <span><span class="ARCKHÉ-meter-count" data-ARCKHÉ-meter-frac>0 de 6</span> · <span class="text-emerald-400 font-semibold" data-ARCKHÉ-meter-pct>0%</span></span>
           </div>
-          <div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div>
+          <div class="ARCKHÉ-bar"><div class="ARCKHÉ-bar__fill" data-ARCKHÉ-meter-fill></div></div>
         </div>
 
         <section class="mb-16 rounded-2xl border border-emerald-500/30 bg-dark-800 shadow-[inset_0_-4px_0_0_rgba(52,211,153,0.25)] p-8">
@@ -302,7 +302,7 @@
           </svg>
         </div>
 
-      <section id="topico-1" data-inema-topic="modulo-1-4#topico-1" class="mb-16">
+      <section id="topico-1" data-ARCKHÉ-topic="modulo-1-4#topico-1" class="mb-16">
         <div class="flex items-start justify-between gap-4 mb-6">
           <div class="flex items-start gap-4">
             <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">1</span>
@@ -311,13 +311,13 @@
               <p class="text-neutral-400">Execucao como dependencia. Quando o valor fica preso ao entregavel tecnico, o cliente delega, cobra e pouco aprende. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
             </div>
           </div>
-          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+          <button type="button" data-ARCKHÉ-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
         </div>
 
         <div class="space-y-6">
           <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
             <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
-            <p data-inema-block="m1-4-t1-p1" class="text-neutral-300 mb-4">Quando o valor fica preso ao entregavel tecnico, o cliente delega, cobra e pouco aprende. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p data-ARCKHÉ-block="m1-4-t1-p1" class="text-neutral-300 mb-4">Quando o valor fica preso ao entregavel tecnico, o cliente delega, cobra e pouco aprende. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
             <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
           </div>
 
@@ -378,15 +378,15 @@
           </div>
 
           <div class="flex justify-start mt-2">
-            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
-              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            <button type="button" data-ARCKHÉ-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="ARCKHÉ-ico-todo" aria-hidden="true">○</span><span class="ARCKHÉ-ico-done" aria-hidden="true">●</span>
+              <span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido</span>
             </button>
           </div>
         </div>
       </section>
     
-      <section id="topico-2" data-inema-topic="modulo-1-4#topico-2" class="mb-16">
+      <section id="topico-2" data-ARCKHÉ-topic="modulo-1-4#topico-2" class="mb-16">
         <div class="flex items-start justify-between gap-4 mb-6">
           <div class="flex items-start gap-4">
             <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">2</span>
@@ -395,13 +395,13 @@
               <p class="text-neutral-400">Mudanca de posicionamento. Quem so executa tende a ser visto como fornecedor. Quem habilita ocupa espaco de orientacao. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
             </div>
           </div>
-          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+          <button type="button" data-ARCKHÉ-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
         </div>
 
         <div class="space-y-6">
           <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
             <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
-            <p data-inema-block="m1-4-t2-p1" class="text-neutral-300 mb-4">Quem so executa tende a ser visto como fornecedor. Quem habilita ocupa espaco de orientacao. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p data-ARCKHÉ-block="m1-4-t2-p1" class="text-neutral-300 mb-4">Quem so executa tende a ser visto como fornecedor. Quem habilita ocupa espaco de orientacao. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
             <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
           </div>
 
@@ -462,15 +462,15 @@
           </div>
 
           <div class="flex justify-start mt-2">
-            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
-              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            <button type="button" data-ARCKHÉ-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="ARCKHÉ-ico-todo" aria-hidden="true">○</span><span class="ARCKHÉ-ico-done" aria-hidden="true">●</span>
+              <span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido</span>
             </button>
           </div>
         </div>
       </section>
     
-      <section id="topico-3" data-inema-topic="modulo-1-4#topico-3" class="mb-16">
+      <section id="topico-3" data-ARCKHÉ-topic="modulo-1-4#topico-3" class="mb-16">
         <div class="flex items-start justify-between gap-4 mb-6">
           <div class="flex items-start gap-4">
             <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">3</span>
@@ -479,13 +479,13 @@
               <p class="text-neutral-400">Modelo mais leve e recorrente. Habilitacao e acompanhamento escalam melhor do que projetos isolados com retrabalho alto. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
             </div>
           </div>
-          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+          <button type="button" data-ARCKHÉ-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
         </div>
 
         <div class="space-y-6">
           <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
             <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
-            <p data-inema-block="m1-4-t3-p1" class="text-neutral-300 mb-4">Habilitacao e acompanhamento escalam melhor do que projetos isolados com retrabalho alto. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p data-ARCKHÉ-block="m1-4-t3-p1" class="text-neutral-300 mb-4">Habilitacao e acompanhamento escalam melhor do que projetos isolados com retrabalho alto. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
             <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
           </div>
 
@@ -546,15 +546,15 @@
           </div>
 
           <div class="flex justify-start mt-2">
-            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
-              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            <button type="button" data-ARCKHÉ-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="ARCKHÉ-ico-todo" aria-hidden="true">○</span><span class="ARCKHÉ-ico-done" aria-hidden="true">●</span>
+              <span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido</span>
             </button>
           </div>
         </div>
       </section>
     
-      <section id="topico-4" data-inema-topic="modulo-1-4#topico-4" class="mb-16">
+      <section id="topico-4" data-ARCKHÉ-topic="modulo-1-4#topico-4" class="mb-16">
         <div class="flex items-start justify-between gap-4 mb-6">
           <div class="flex items-start gap-4">
             <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">4</span>
@@ -563,13 +563,13 @@
               <p class="text-neutral-400">Preparacao melhora a implementacao. Clientes mais preparados definem melhor prioridades, expectativas e limites. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
             </div>
           </div>
-          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+          <button type="button" data-ARCKHÉ-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
         </div>
 
         <div class="space-y-6">
           <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
             <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
-            <p data-inema-block="m1-4-t4-p1" class="text-neutral-300 mb-4">Clientes mais preparados definem melhor prioridades, expectativas e limites. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p data-ARCKHÉ-block="m1-4-t4-p1" class="text-neutral-300 mb-4">Clientes mais preparados definem melhor prioridades, expectativas e limites. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
             <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
           </div>
 
@@ -630,15 +630,15 @@
           </div>
 
           <div class="flex justify-start mt-2">
-            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
-              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            <button type="button" data-ARCKHÉ-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="ARCKHÉ-ico-todo" aria-hidden="true">○</span><span class="ARCKHÉ-ico-done" aria-hidden="true">●</span>
+              <span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido</span>
             </button>
           </div>
         </div>
       </section>
     
-      <section id="topico-5" data-inema-topic="modulo-1-4#topico-5" class="mb-16">
+      <section id="topico-5" data-ARCKHÉ-topic="modulo-1-4#topico-5" class="mb-16">
         <div class="flex items-start justify-between gap-4 mb-6">
           <div class="flex items-start gap-4">
             <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">5</span>
@@ -647,13 +647,13 @@
               <p class="text-neutral-400">Mais areas, mais conversas. Treinamentos bem conduzidos ampliam visibilidade e permitem acessar outras liderancas e equipes. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
             </div>
           </div>
-          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+          <button type="button" data-ARCKHÉ-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
         </div>
 
         <div class="space-y-6">
           <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
             <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
-            <p data-inema-block="m1-4-t5-p1" class="text-neutral-300 mb-4">Treinamentos bem conduzidos ampliam visibilidade e permitem acessar outras liderancas e equipes. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p data-ARCKHÉ-block="m1-4-t5-p1" class="text-neutral-300 mb-4">Treinamentos bem conduzidos ampliam visibilidade e permitem acessar outras liderancas e equipes. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
             <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
           </div>
 
@@ -714,15 +714,15 @@
           </div>
 
           <div class="flex justify-start mt-2">
-            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
-              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            <button type="button" data-ARCKHÉ-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="ARCKHÉ-ico-todo" aria-hidden="true">○</span><span class="ARCKHÉ-ico-done" aria-hidden="true">●</span>
+              <span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido</span>
             </button>
           </div>
         </div>
       </section>
     
-      <section id="topico-6" data-inema-topic="modulo-1-4#topico-6" class="mb-16">
+      <section id="topico-6" data-ARCKHÉ-topic="modulo-1-4#topico-6" class="mb-16">
         <div class="flex items-start justify-between gap-4 mb-6">
           <div class="flex items-start gap-4">
             <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl flex-shrink-0">6</span>
@@ -731,13 +731,13 @@
               <p class="text-neutral-400">Habilitacao como ativo estrategico. A proposta do PHA 2030 transforma a aula em mecanismo de entrada, diagnostico e continuidade. Este modulo confronta dois modelos de posicionamento e mostra por que habilitar costuma gerar mais autoridade, mais profundidade de relacao e melhor continuidade do que vender execucao isolada.</p>
             </div>
           </div>
-          <button type="button" data-inema-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
+          <button type="button" data-ARCKHÉ-doubt-toggle aria-pressed="false" title="Marcar dúvida neste tópico" class="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 hover:bg-dark-600 transition-colors text-sm flex-shrink-0"><span aria-hidden="true">?</span><span>Dúvida</span></button>
         </div>
 
         <div class="space-y-6">
           <div class="bg-gradient-to-br from-emerald-900/20 to-transparent rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-900/30 to-transparent p-6">
             <h3 class="text-lg font-semibold text-emerald-400 mb-2">Tensao central</h3>
-            <p data-inema-block="m1-4-t6-p1" class="text-neutral-300 mb-4">A proposta do PHA 2030 transforma a aula em mecanismo de entrada, diagnostico e continuidade. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
+            <p data-ARCKHÉ-block="m1-4-t6-p1" class="text-neutral-300 mb-4">A proposta do PHA 2030 transforma a aula em mecanismo de entrada, diagnostico e continuidade. O contraste central aqui e entre um modelo em que o cliente apenas delega e outro em que ele amadurece junto com a entrega. Quando a proposta fica presa a execucao, o valor tende a ficar preso ao entregavel e a relacao tende a se tornar mais tática.</p>
             <p class="text-neutral-300">Ja quando a proposta comeca pela habilitacao, o profissional ganha outro lugar: passa a organizar contexto, ensinar criterio, revelar gargalos e preparar o terreno para que qualquer implementacao posterior seja mais clara e menos desgastante.</p>
           </div>
 
@@ -798,9 +798,9 @@
           </div>
 
           <div class="flex justify-start mt-2">
-            <button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
-              <span class="inema-ico-todo" aria-hidden="true">○</span><span class="inema-ico-done" aria-hidden="true">●</span>
-              <span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido</span>
+            <button type="button" data-ARCKHÉ-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors">
+              <span class="ARCKHÉ-ico-todo" aria-hidden="true">○</span><span class="ARCKHÉ-ico-done" aria-hidden="true">●</span>
+              <span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido</span>
             </button>
           </div>
         </div>
@@ -823,15 +823,15 @@
 
           <!-- TOC -->
           <aside>
-            <nav data-inema-toc aria-label="Índice da página" class="hidden lg:block sticky top-24 self-start">
-              <p class="text-sm text-neutral-400 mb-3">Seçêo <span data-inema-section-counter>1 de 6</span></p>
+            <nav data-ARCKHÉ-toc aria-label="Índice da página" class="hidden lg:block sticky top-24 self-start">
+              <p class="text-sm text-neutral-400 mb-3">Seçêo <span data-ARCKHÉ-section-counter>1 de 6</span></p>
               <ol class="space-y-1 text-sm">
-                <li><a href="#topico-1" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">1. Problema do modelo antigo</a></li>
-                <li><a href="#topico-2" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">2. Fornecedor versus referência</a></li>
-                <li><a href="#topico-3" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">3. Escala com menos desgaste</a></li>
-                <li><a href="#topico-4" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">4. Educar antes de executar</a></li>
-                <li><a href="#topico-5" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">5. Abertura de portas internas</a></li>
-                <li><a href="#topico-6" class="inema-toc-link block py-1 text-neutral-400 hover:text-emerald-400">6. Tese comercial final</a></li>
+                <li><a href="#topico-1" class="ARCKHÉ-toc-link block py-1 text-neutral-400 hover:text-emerald-400">1. Problema do modelo antigo</a></li>
+                <li><a href="#topico-2" class="ARCKHÉ-toc-link block py-1 text-neutral-400 hover:text-emerald-400">2. Fornecedor versus referência</a></li>
+                <li><a href="#topico-3" class="ARCKHÉ-toc-link block py-1 text-neutral-400 hover:text-emerald-400">3. Escala com menos desgaste</a></li>
+                <li><a href="#topico-4" class="ARCKHÉ-toc-link block py-1 text-neutral-400 hover:text-emerald-400">4. Educar antes de executar</a></li>
+                <li><a href="#topico-5" class="ARCKHÉ-toc-link block py-1 text-neutral-400 hover:text-emerald-400">5. Abertura de portas internas</a></li>
+                <li><a href="#topico-6" class="ARCKHÉ-toc-link block py-1 text-neutral-400 hover:text-emerald-400">6. Tese comercial final</a></li>
               </ol>
             </nav>
           </aside>
@@ -887,13 +887,13 @@
       document.documentElement.classList.toggle('dark');
       document.documentElement.style.colorScheme = isDark() ? 'dark' : 'light';
       localStorage.setItem('theme', isDark() ? 'dark' : 'light');
-      try { if (window.INEMA && INEMA.setPref) INEMA.setPref('theme', isDark() ? 'inema-dark' : 'claro'); } catch (e) {}
+      try { if (window.ARCKHÉ && ARCKHÉ.setPref) ARCKHÉ.setPref('theme', isDark() ? 'ARCKHÉ-dark' : 'claro'); } catch (e) {}
       syncIcons();
     });
   </script>
 
   <!-- CAMADA DE APRENDIZAGEM -->
   <script src="../../assets/learn.js"></script>
-  <script>if (window.INEMA && typeof window.INEMA.init === 'function') { window.INEMA.init(); }</script>
+  <script>if (window.ARCKHÉ && typeof window.ARCKHÉ.init === 'function') { window.ARCKHÉ.init(); }</script>
 </body>
 </html>

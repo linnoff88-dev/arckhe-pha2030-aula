@@ -2,7 +2,7 @@
 
 ## Visao geral
 
-Este documento consolida a analise dos materiais do projeto PHA 2030 e define a arquitetura do curso completo no formato INEMA.CLUB.
+Este documento consolida a analise dos materiais do projeto PHA 2030 e define a arquitetura do curso completo no formato ARCKHÉ AI.
 
 O curso nasce da tese central presente nos documentos-base:
 
@@ -85,7 +85,7 @@ Modulos:
 
 ## Padrao de implementacao
 
-O curso sera implementado no formato INEMA.CLUB com:
+O curso sera implementado no formato ARCKHÉ AI com:
 
 - `index.html` principal
 - `curso/trilhaX/index.html` para cada trilha
@@ -94,7 +94,7 @@ O curso sera implementado no formato INEMA.CLUB com:
   - O que e
   - Por que aprender
   - Conceitos-chave
-- navegacao global com link INEMA.CLUB
+- navegacao global com link ARCKHÉ AI
 - suporte a dark mode e light mode
 
 ## Metricas estruturais do curso

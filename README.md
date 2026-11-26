@@ -11,7 +11,7 @@ Curso e materiais do projeto **PHA 2030 | Da Capacitacao a Transformacao**.
 O repositorio reune:
 
 - documentacao-base em `doc/`
-- estrutura do curso HTML no padrao INEMA.CLUB em `curso/`
+- estrutura do curso HTML no padrao ARCKHÉ AI em `curso/`
 - landing page em `index.html`
 - scripts de geracao em `scripts/`
 
@@ -49,13 +49,13 @@ Os materiais centrais usados na estruturacao do curso estao em `doc/`, com desta
 - `doc/workshop-2h.md`
 - `doc/slides.md`
 
-<!-- inema-backlink:v1 -->
-## Mais no INEMA.CLUB
+<!-- ARCKHÉ-backlink:v1 -->
+## Mais no ARCKHÉ AI
 
-- [Ficha completa deste curso](https://www.inema.club/cursos/50-pha-2030-da-capacitacao-a-transformacao/)
-- [Guia: como aprender inteligência artificial](https://www.inema.club/aprender-inteligencia-artificial/)
-- [Todos os cursos](https://www.inema.club/cursos/)
-<!-- /inema-backlink:v1 -->
+- [Ficha completa deste curso](https://www.ARCKHÉ AI/cursos/50-pha-2030-da-capacitacao-a-transformacao/)
+- [Guia: como aprender inteligência artificial](https://www.ARCKHÉ AI/aprender-inteligencia-artificial/)
+- [Todos os cursos](https://www.ARCKHÉ AI/cursos/)
+<!-- /ARCKHÉ-backlink:v1 -->
 
 ---
 
